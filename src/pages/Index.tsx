@@ -1,5 +1,4 @@
 import { RecommendationSection } from "@/components/recommendations/RecommendationSection";
-import { DeveloperTools } from "@/components/developer/DeveloperTools";
 import { RecommendationFeed } from "@/components/recommendations/RecommendationFeed";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -35,10 +34,6 @@ const Index = () => {
 
         <section className="animate-fade-in [--animate-delay:400ms]">
           <RecommendationSection />
-        </section>
-
-        <section className="animate-fade-in [--animate-delay:600ms]">
-          <DeveloperTools />
         </section>
       </div>
     </div>
