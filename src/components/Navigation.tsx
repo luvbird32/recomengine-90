@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
@@ -6,7 +7,14 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <span className="text-xl font-bold text-purple-600">SocialSense</span>
+            <Link to="/" className="text-xl font-bold text-purple-600">
+              SocialSense
+            </Link>
+            <div className="ml-8 space-x-4">
+              <Link to="/dashboard" className="text-gray-600 hover:text-purple-600">
+                Dashboard
+              </Link>
+            </div>
           </div>
           <div className="flex items-center gap-4">
             <Button variant="ghost">Login</Button>
