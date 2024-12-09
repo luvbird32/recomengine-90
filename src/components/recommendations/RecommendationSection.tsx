@@ -1,47 +1,47 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RecommendationCard } from "./RecommendationCard";
 
-// Mock data - replace with real data when backend is integrated
+// Demo data showcasing different types of recommendations
 const mockRecommendations = {
-  users: [
-    {
-      type: 'user' as const,
-      title: 'Sarah Johnson',
-      description: 'UX Designer | 89% interest match based on your interactions',
-      image: '/placeholder.svg',
-      score: 0.89,
-      location: 'San Francisco, CA'
-    },
-    {
-      type: 'user' as const,
-      title: 'Mike Chen',
-      description: 'Tech Enthusiast | 75% interest match based on mutual connections',
-      image: '/placeholder.svg',
-      score: 0.75,
-      location: 'New York, NY'
-    }
-  ],
-  content: [
+  products: [
     {
       type: 'content' as const,
-      title: 'UI Design Trends 2024',
-      description: 'Recommended based on your recent activity in design topics',
+      title: 'Product Recommendations',
+      description: 'Suggest relevant products based on user browsing history and purchase patterns',
       score: 0.92
     },
     {
       type: 'content' as const,
-      title: 'Machine Learning Basics',
-      description: 'Popular among users with similar interests',
+      title: 'Content Personalization',
+      description: 'Deliver personalized content based on user preferences and behavior',
       score: 0.85
     }
   ],
-  locations: [
+  features: [
+    {
+      type: 'user' as const,
+      title: 'Real-time Processing',
+      description: 'Process user interactions in real-time for immediate recommendations',
+      image: '/placeholder.svg',
+      score: 0.89,
+      location: 'Core Feature'
+    },
+    {
+      type: 'user' as const,
+      title: 'Machine Learning Models',
+      description: 'Advanced ML models that improve with more user data',
+      image: '/placeholder.svg',
+      score: 0.75,
+      location: 'ML Pipeline'
+    }
+  ],
+  integrations: [
     {
       type: 'location' as const,
-      title: 'Tech Meetup Group',
-      description: 'Active community near you with 500+ members',
+      title: 'Easy API Integration',
+      description: 'Simple REST API endpoints for seamless integration',
       score: 0.88,
-      location: 'Downtown Tech Hub'
+      location: 'Developer Tools'
     }
   ]
 };
@@ -51,32 +51,32 @@ export function RecommendationSection() {
     <div className="grid gap-6">
       <Card>
         <CardHeader>
-          <CardTitle>Recommended for You</CardTitle>
+          <CardTitle>Our Recommendation Engine Features</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-6">
           <div>
-            <h3 className="text-lg font-semibold mb-4">People You Might Know</h3>
+            <h3 className="text-lg font-semibold mb-4">Recommendation Types</h3>
             <div className="grid gap-4">
-              {mockRecommendations.users.map((rec, index) => (
-                <RecommendationCard key={`user-${index}`} {...rec} />
+              {mockRecommendations.products.map((rec, index) => (
+                <RecommendationCard key={`product-${index}`} {...rec} />
               ))}
             </div>
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Content You Might Like</h3>
+            <h3 className="text-lg font-semibold mb-4">Core Features</h3>
             <div className="grid gap-4">
-              {mockRecommendations.content.map((rec, index) => (
-                <RecommendationCard key={`content-${index}`} {...rec} />
+              {mockRecommendations.features.map((rec, index) => (
+                <RecommendationCard key={`feature-${index}`} {...rec} />
               ))}
             </div>
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Near You</h3>
+            <h3 className="text-lg font-semibold mb-4">Integration Options</h3>
             <div className="grid gap-4">
-              {mockRecommendations.locations.map((rec, index) => (
-                <RecommendationCard key={`location-${index}`} {...rec} />
+              {mockRecommendations.integrations.map((rec, index) => (
+                <RecommendationCard key={`integration-${index}`} {...rec} />
               ))}
             </div>
           </div>

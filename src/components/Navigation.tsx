@@ -8,7 +8,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link to="/" className="text-xl font-bold text-purple-600">
-              SocialSense
+              RecommendEngine
             </Link>
             <div className="ml-8 space-x-4">
               <Link to="/dashboard" className="text-gray-600 hover:text-purple-600">
@@ -17,8 +17,8 @@ const Navigation = () => {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="ghost">Login</Button>
-            <Button className="bg-purple-600 hover:bg-purple-700">Sign Up</Button>
+            <Button variant="ghost">Documentation</Button>
+            <Button className="bg-purple-600 hover:bg-purple-700">Get Started</Button>
           </div>
         </div>
       </div>
