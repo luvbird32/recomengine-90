@@ -1,5 +1,6 @@
 import { RecommendationSection } from "@/components/recommendations/RecommendationSection";
 import { DeveloperTools } from "@/components/developer/DeveloperTools";
+import { RecommendationFeed } from "@/components/recommendations/RecommendationFeed";
 
 const Index = () => {
   return (
@@ -12,6 +13,7 @@ const Index = () => {
           Build powerful, personalized recommendation systems for your applications
         </p>
       </div>
+      <RecommendationFeed />
       <RecommendationSection />
       <DeveloperTools />
     </div>
