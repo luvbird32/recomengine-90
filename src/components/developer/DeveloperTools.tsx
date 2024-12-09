@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Code, Book, Terminal } from "lucide-react";
+import { Code, Book, Terminal, Key } from "lucide-react";
+import { ApiKeyGenerator } from "./ApiKeyGenerator";
 
 export function DeveloperTools() {
   return (
@@ -9,6 +10,18 @@ export function DeveloperTools() {
         <h2 className="text-3xl font-bold mb-4">Developer Tools</h2>
         <p className="text-gray-600">Everything you need to integrate our recommendation engine</p>
       </div>
+
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Key className="h-5 w-5" />
+            Get Your API Key
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ApiKeyGenerator />
+        </CardContent>
+      </Card>
 
       <Tabs defaultValue="sdk" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
