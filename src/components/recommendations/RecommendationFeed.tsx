@@ -1,25 +1,96 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { getRecommendedUsers, getRecommendedContent, trackUserBehavior } from '@/services/recommendationService';
+import { getRecommendedUsers, getRecommendedContent } from '@/services/recommendationService';
+import { trackEvent } from '@/services/analyticsService';
 import { UserPlus, Heart, Eye } from 'lucide-react';
+import { useToast } from "@/components/ui/use-toast";
 
 export function RecommendationFeed() {
   const recommendedUsers = getRecommendedUsers();
   const recommendedContent = getRecommendedContent();
+  const { toast } = useToast();
+  const [viewStartTime, setViewStartTime] = useState<Date | null>(null);
 
   useEffect(() => {
     // Track feed view
-    trackUserBehavior('current-user', 'view', 'feed', 'content');
+    setViewStartTime(new Date());
+    trackEvent({
+      userId: 'current-user',
+      eventType: 'view',
+      targetId: 'feed',
+      targetType: 'content',
+      metadata: {
+        location: {
+          latitude: 37.7749, // Mock location for demo
+          longitude: -122.4194,
+          city: 'San Francisco',
+          country: 'USA'
+        }
+      }
+    });
+
+    // Track time spent when component unmounts
+    return () => {
+      if (viewStartTime) {
+        const duration = new Date().getTime() - viewStartTime.getTime();
+        trackEvent({
+          userId: 'current-user',
+          eventType: 'timeSpent',
+          targetId: 'feed',
+          targetType: 'content',
+          metadata: {
+            duration: duration / 1000 // Convert to seconds
+          }
+        });
+      }
+    };
   }, []);
 
   const handleFollow = (userId: string) => {
-    trackUserBehavior('current-user', 'follow', userId, 'user');
+    trackEvent({
+      userId: 'current-user',
+      eventType: 'follow',
+      targetId: userId,
+      targetType: 'user'
+    });
+    
+    toast({
+      title: "Followed User",
+      description: "You are now following this user.",
+    });
   };
 
   const handleLike = (contentId: string) => {
-    trackUserBehavior('current-user', 'like', contentId, 'content');
+    trackEvent({
+      userId: 'current-user',
+      eventType: 'like',
+      targetId: contentId,
+      targetType: 'content'
+    });
+    
+    toast({
+      title: "Content Liked",
+      description: "Thanks for your feedback!",
+    });
+  };
+
+  const handleContentView = (contentId: string) => {
+    trackEvent({
+      userId: 'current-user',
+      eventType: 'view',
+      targetId: contentId,
+      targetType: 'content',
+      metadata: {
+        location: {
+          latitude: 37.7749,
+          longitude: -122.4194,
+          city: 'San Francisco',
+          country: 'USA'
+        }
+      }
+    });
   };
 
   return (
@@ -95,4 +166,3 @@ export function RecommendationFeed() {
       </section>
     </div>
   );
-}

@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import { Users, TrendingUp, Activity, Target } from "lucide-react";
+import { EngagementMetrics } from "@/components/analytics/EngagementMetrics";
 
 const mockEngagementData = [
   { name: 'Jan', value: 400 },
@@ -74,6 +75,11 @@ const Dashboard = () => {
             <p className="text-xs text-muted-foreground">-15ms from average</p>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Engagement Metrics */}
+      <div className="mt-8">
+        <EngagementMetrics />
       </div>
 
       {/* Charts */}
