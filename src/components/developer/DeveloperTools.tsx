@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Code, Book, Terminal, Key } from "lucide-react";
+import { Code, Book, Terminal, Key, FileJson } from "lucide-react";
 import { ApiKeyGenerator } from "./ApiKeyGenerator";
+import { OpenApiDocs } from "./OpenApiDocs";
 
 export function DeveloperTools() {
   return (
@@ -24,12 +25,15 @@ export function DeveloperTools() {
       </Card>
 
       <Tabs defaultValue="sdk" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="sdk" className="flex items-center gap-2">
             <Code className="h-4 w-4" /> SDK
           </TabsTrigger>
           <TabsTrigger value="api" className="flex items-center gap-2">
             <Terminal className="h-4 w-4" /> API Reference
+          </TabsTrigger>
+          <TabsTrigger value="openapi" className="flex items-center gap-2">
+            <FileJson className="h-4 w-4" /> OpenAPI
           </TabsTrigger>
           <TabsTrigger value="guides" className="flex items-center gap-2">
             <Book className="h-4 w-4" /> Integration Guides
@@ -109,6 +113,17 @@ const recommendations = await engine.getRecommendations({
                   </div>
                 </div>
               </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="openapi">
+          <Card>
+            <CardHeader>
+              <CardTitle>OpenAPI Documentation</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <OpenApiDocs />
             </CardContent>
           </Card>
         </TabsContent>
