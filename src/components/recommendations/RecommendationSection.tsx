@@ -5,7 +5,7 @@ import { RecommendationCard } from "./RecommendationCard";
 const mockRecommendations = {
   users: [
     {
-      type: 'user',
+      type: 'user' as const,
       title: 'Sarah Johnson',
       description: 'UX Designer | 89% interest match based on your interactions',
       image: '/placeholder.svg',
@@ -13,7 +13,7 @@ const mockRecommendations = {
       location: 'San Francisco, CA'
     },
     {
-      type: 'user',
+      type: 'user' as const,
       title: 'Mike Chen',
       description: 'Tech Enthusiast | 75% interest match based on mutual connections',
       image: '/placeholder.svg',
@@ -23,13 +23,13 @@ const mockRecommendations = {
   ],
   content: [
     {
-      type: 'content',
+      type: 'content' as const,
       title: 'UI Design Trends 2024',
       description: 'Recommended based on your recent activity in design topics',
       score: 0.92
     },
     {
-      type: 'content',
+      type: 'content' as const,
       title: 'Machine Learning Basics',
       description: 'Popular among users with similar interests',
       score: 0.85
@@ -37,7 +37,7 @@ const mockRecommendations = {
   ],
   locations: [
     {
-      type: 'location',
+      type: 'location' as const,
       title: 'Tech Meetup Group',
       description: 'Active community near you with 500+ members',
       score: 0.88,
