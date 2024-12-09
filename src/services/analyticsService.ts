@@ -110,6 +110,7 @@ const getTopSharedInterests = (events: AnalyticsEvent[]) => {
     .map(([interest]) => interest);
 };
 
+// Ensure getLocationAnalytics is exported
 export const getLocationAnalytics = () => {
   const locationEvents = analyticsEvents.filter(event => event.metadata?.location);
   
