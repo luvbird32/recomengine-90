@@ -3,6 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { Users, TrendingUp, Activity, Target, Brain, Zap, BarChart2, Gauge, FileText, Shield, Upload } from "lucide-react";
 import { EngagementMetrics } from "@/components/analytics/EngagementMetrics";
 import { ContentManagement } from "@/components/content/ContentManagement";
+import { DeveloperTools } from "@/components/developer/DeveloperTools";
 
 const mockUserGrowthData = [
   { name: 'Jan', users: 1200, activeUsers: 800 },
@@ -17,13 +18,6 @@ const mockAccuracyData = [
   { category: 'Content Recs', accuracy: 88 },
   { category: 'Search Recs', accuracy: 85 },
   { category: 'Email Recs', accuracy: 90 },
-];
-
-const mockContentPerformance = [
-  { type: 'Product Pages', engagement: 85, conversion: 12 },
-  { type: 'Blog Posts', engagement: 78, conversion: 8 },
-  { type: 'Email Content', engagement: 72, conversion: 15 },
-  { type: 'Search Results', engagement: 90, conversion: 18 },
 ];
 
 const Dashboard = () => {
@@ -128,6 +122,11 @@ const Dashboard = () => {
       {/* Engagement Metrics */}
       <div className="mt-6">
         <EngagementMetrics />
+      </div>
+
+      {/* Developer Tools Section */}
+      <div className="mt-12">
+        <DeveloperTools />
       </div>
     </div>
   );
