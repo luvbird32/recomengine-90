@@ -1,29 +1,29 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
-import { Users, TrendingUp, Activity, Target } from "lucide-react";
+import { Users, TrendingUp, Activity, Target, Brain, Zap, BarChart2, Gauge } from "lucide-react";
 import { EngagementMetrics } from "@/components/analytics/EngagementMetrics";
 
-const mockEngagementData = [
-  { name: 'Jan', value: 400 },
-  { name: 'Feb', value: 300 },
-  { name: 'Mar', value: 600 },
-  { name: 'Apr', value: 800 },
-  { name: 'May', value: 700 },
+const mockUserGrowthData = [
+  { name: 'Jan', users: 1200, activeUsers: 800 },
+  { name: 'Feb', users: 1800, activeUsers: 1200 },
+  { name: 'Mar', users: 2400, activeUsers: 1600 },
+  { name: 'Apr', users: 3200, activeUsers: 2400 },
+  { name: 'May', users: 4000, activeUsers: 3000 },
 ];
 
 const mockAccuracyData = [
-  { name: 'Products', value: 85 },
-  { name: 'Content', value: 92 },
-  { name: 'Users', value: 78 },
+  { category: 'Product Recs', accuracy: 92 },
+  { category: 'Content Recs', accuracy: 88 },
+  { category: 'Search Recs', accuracy: 85 },
+  { category: 'Email Recs', accuracy: 90 },
 ];
 
-const mockCategoryData = [
-  { name: 'Products', value: 400 },
-  { name: 'Content', value: 300 },
-  { name: 'Users', value: 200 },
+const mockContentPerformance = [
+  { type: 'Product Pages', engagement: 85, conversion: 12 },
+  { type: 'Blog Posts', engagement: 78, conversion: 8 },
+  { type: 'Email Content', engagement: 72, conversion: 15 },
+  { type: 'Search Results', engagement: 90, conversion: 18 },
 ];
-
-const COLORS = ['#8884d8', '#82ca9d', '#ffc658'];
 
 const Dashboard = () => {
   return (
@@ -34,40 +34,40 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Total Recommendations</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Total API Calls</CardTitle>
+            <Zap className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">124,892</div>
-            <p className="text-xs text-muted-foreground">+12% from last month</p>
+            <div className="text-2xl font-bold">2.4M</div>
+            <p className="text-xs text-muted-foreground">+15% from last month</p>
           </CardContent>
         </Card>
         
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Active Users</CardTitle>
+            <CardTitle className="text-sm font-medium">Active Customers</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">8,942</div>
-            <p className="text-xs text-muted-foreground">+5% from last week</p>
+            <div className="text-2xl font-bold">1,842</div>
+            <p className="text-xs text-muted-foreground">+8% from last month</p>
           </CardContent>
         </Card>
         
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Accuracy Rate</CardTitle>
+            <CardTitle className="text-sm font-medium">Avg Accuracy</CardTitle>
             <Target className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">92.4%</div>
+            <div className="text-2xl font-bold">89.4%</div>
             <p className="text-xs text-muted-foreground">+2.1% improvement</p>
           </CardContent>
         </Card>
         
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Processing Time</CardTitle>
+            <CardTitle className="text-sm font-medium">Response Time</CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -77,96 +77,84 @@ const Dashboard = () => {
         </Card>
       </div>
 
-      {/* Engagement Metrics */}
-      <div className="mt-8">
-        <EngagementMetrics />
-      </div>
-
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Engagement Over Time */}
+      {/* User Growth Chart */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <Card>
           <CardHeader>
-            <CardTitle>Recommendation Engagement</CardTitle>
+            <CardTitle>User Growth Trends</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={mockEngagementData}>
+                <LineChart data={mockUserGrowthData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
-                  <Line type="monotone" dataKey="value" stroke="#8884d8" />
+                  <Line type="monotone" dataKey="users" stroke="#8884d8" name="Total Users" />
+                  <Line type="monotone" dataKey="activeUsers" stroke="#82ca9d" name="Active Users" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
 
-        {/* Recommendation Accuracy by Type */}
         <Card>
           <CardHeader>
-            <CardTitle>Accuracy by Type</CardTitle>
+            <CardTitle>Recommendation Accuracy by Category</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={mockAccuracyData}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
+                  <XAxis dataKey="category" />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="value" fill="#82ca9d" />
+                  <Bar dataKey="accuracy" fill="#8884d8" name="Accuracy %" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Content Performance */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Content Performance</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={mockContentPerformance}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="type" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="engagement" fill="#8884d8" name="Engagement %" />
+                  <Bar dataKey="conversion" fill="#82ca9d" name="Conversion %" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
 
-        {/* Distribution by Category */}
+        {/* Engagement Metrics Component */}
         <Card>
           <CardHeader>
-            <CardTitle>Recommendation Distribution</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={mockCategoryData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {mockCategoryData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Health Status */}
-        <Card>
-          <CardHeader>
-            <CardTitle>System Health</CardTitle>
+            <CardTitle>Real-time Metrics</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between mb-1">
-                  <span className="text-sm">API Response Time</span>
-                  <span className="text-sm font-medium">45ms</span>
+                  <span className="text-sm">API Success Rate</span>
+                  <span className="text-sm font-medium">99.9%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-green-500 h-2 rounded-full" style={{ width: '92%' }}></div>
+                  <div className="bg-green-500 h-2 rounded-full" style={{ width: '99.9%' }}></div>
                 </div>
               </div>
               <div>
@@ -180,16 +168,21 @@ const Dashboard = () => {
               </div>
               <div>
                 <div className="flex justify-between mb-1">
-                  <span className="text-sm">System Load</span>
-                  <span className="text-sm font-medium">65%</span>
+                  <span className="text-sm">Cache Hit Rate</span>
+                  <span className="text-sm font-medium">88%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-yellow-500 h-2 rounded-full" style={{ width: '65%' }}></div>
+                  <div className="bg-purple-500 h-2 rounded-full" style={{ width: '88%' }}></div>
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Engagement Metrics */}
+      <div className="mt-6">
+        <EngagementMetrics />
       </div>
     </div>
   );
