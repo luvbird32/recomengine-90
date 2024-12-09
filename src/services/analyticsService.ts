@@ -14,6 +14,8 @@ interface AnalyticsEvent {
       country?: string;
     };
     searchQuery?: string;
+    mutualScore?: number;
+    sharedInterests?: string[];
   };
   timestamp: Date;
 }
@@ -65,22 +67,45 @@ const calculateAverageTimeSpent = (events: AnalyticsEvent[]) => {
   return totalTime / timeSpentEvents.length;
 };
 
-export const getLocationAnalytics = () => {
-  const locationEvents = analyticsEvents.filter(event => event.metadata?.location);
+export const getMutualSimilarityMetrics = (userId: string) => {
+  const mutualEvents = analyticsEvents.filter(
+    event => event.userId === userId && event.metadata?.mutualScore
+  );
   
-  // Group by country/city
-  const locationMap = new Map<string, number>();
+  return {
+    averageMutualScore: calculateAverageMutualScore(mutualEvents),
+    totalMutualConnections: calculateTotalMutualConnections(mutualEvents),
+    interestOverlapRate: calculateInterestOverlapRate(mutualEvents),
+    topSharedInterests: getTopSharedInterests(mutualEvents)
+  };
+};
+
+const calculateAverageMutualScore = (events: AnalyticsEvent[]) => {
+  const scores = events.map(e => e.metadata?.mutualScore || 0);
+  return scores.length ? scores.reduce((a, b) => a + b) / scores.length : 0;
+};
+
+const calculateTotalMutualConnections = (events: AnalyticsEvent[]) => {
+  return events.filter(e => e.eventType === 'follow').length;
+};
+
+const calculateInterestOverlapRate = (events: AnalyticsEvent[]) => {
+  const interestEvents = events.filter(e => e.metadata?.sharedInterests);
+  if (!interestEvents.length) return 0;
+  return interestEvents.reduce((sum, event) => 
+    sum + (event.metadata?.sharedInterests?.length || 0), 0) / interestEvents.length;
+};
+
+const getTopSharedInterests = (events: AnalyticsEvent[]) => {
+  const interests = events
+    .flatMap(e => e.metadata?.sharedInterests || [])
+    .reduce((acc: Record<string, number>, interest: string) => {
+      acc[interest] = (acc[interest] || 0) + 1;
+      return acc;
+    }, {});
   
-  locationEvents.forEach(event => {
-    const location = event.metadata?.location;
-    if (location?.city && location?.country) {
-      const key = `${location.city}, ${location.country}`;
-      locationMap.set(key, (locationMap.get(key) || 0) + 1);
-    }
-  });
-  
-  return Array.from(locationMap.entries()).map(([location, count]) => ({
-    location,
-    engagementCount: count,
-  }));
+  return Object.entries(interests)
+    .sort(([,a], [,b]) => b - a)
+    .slice(0, 5)
+    .map(([interest]) => interest);
 };

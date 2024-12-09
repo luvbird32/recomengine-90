@@ -81,6 +81,54 @@ export function OpenApiDocs() {
             }
           }
         }
+      },
+      "/recommendations/mutuals": {
+        get: {
+          summary: "Get mutual-based recommendations",
+          description: "Retrieve recommendations based on mutual interests and connections",
+          parameters: [
+            {
+              name: "userId",
+              in: "query",
+              required: true,
+              schema: { type: "string" }
+            },
+            {
+              name: "limit",
+              in: "query",
+              schema: { type: "integer", default: 5 }
+            }
+          ],
+          responses: {
+            "200": {
+              description: "Successful response",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      recommendations: {
+                        type: "array",
+                        items: {
+                          type: "object",
+                          properties: {
+                            userId: { type: "string" },
+                            mutualScore: { type: "number" },
+                            sharedInterests: {
+                              type: "array",
+                              items: { type: "string" }
+                            },
+                            sharedConnections: { type: "integer" }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     components: {

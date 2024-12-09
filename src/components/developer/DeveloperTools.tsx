@@ -61,7 +61,16 @@ const engine = new RecommendEngine({
 const recommendations = await engine.getRecommendations({
   userId: 'user-123',
   limit: 5
-});`}</code>
+});
+
+// Get mutual-based recommendations
+const mutualRecommendations = await engine.getMutualRecommendations({
+  userId: 'user-123',
+  limit: 5
+});
+
+// Get mutual similarity metrics
+const mutualMetrics = await engine.getMutualSimilarityMetrics('user-123');`}</code>
                   </pre>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
@@ -109,6 +118,19 @@ const recommendations = await engine.getRecommendations({
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{"userId": "user-123", "limit": 5}'`}</code>
+                    </pre>
+                  </div>
+                </div>
+                <div className="border rounded-lg p-4">
+                  <h3 className="font-semibold mb-2">GET /recommendations/mutuals</h3>
+                  <p className="text-sm text-gray-600 mb-2">
+                    Retrieve recommendations based on mutual interests and connections
+                  </p>
+                  <div className="bg-gray-900 text-gray-100 p-4 rounded-md">
+                    <pre className="text-sm">
+                      <code>{`curl -X GET "https://api.recommendengine.com/v1/recommendations/mutuals?userId=user-123&limit=5" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -H "Content-Type: application/json"`}</code>
                     </pre>
                   </div>
                 </div>

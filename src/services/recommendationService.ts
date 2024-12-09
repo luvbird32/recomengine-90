@@ -1,4 +1,3 @@
-// Mock data and recommendation logic
 interface User {
   id: string;
   name: string;
@@ -17,6 +16,13 @@ interface Content {
   views: number;
   likes: number;
   timestamp: string;
+}
+
+interface MutualScore {
+  userId: string;
+  mutualScore: number;
+  sharedInterests: string[];
+  sharedConnections: number;
 }
 
 // Mock users data
@@ -80,6 +86,36 @@ const contents: Content[] = [
     timestamp: '2024-02-13T09:15:00Z'
   }
 ];
+
+export const getMutualRecommendations = (userId: string, limit: number = 5): MutualScore[] => {
+  const currentUser = users.find(u => u.id === userId);
+  if (!currentUser) return [];
+
+  return users
+    .filter(user => user.id !== userId)
+    .map(user => {
+      // Calculate shared interests
+      const sharedInterests = currentUser.interests.filter(interest => 
+        user.interests.includes(interest)
+      );
+
+      // Calculate mutual score based on shared interests and network overlap
+      const mutualScore = (
+        (sharedInterests.length / Math.max(currentUser.interests.length, user.interests.length)) * 0.7 +
+        (Math.min(user.followers, currentUser.followers) / 
+         Math.max(user.followers, currentUser.followers)) * 0.3
+      );
+
+      return {
+        userId: user.id,
+        mutualScore,
+        sharedInterests,
+        sharedConnections: Math.floor(Math.random() * 10) // Mock data - in real app would calculate actual shared connections
+      };
+    })
+    .sort((a, b) => b.mutualScore - a.mutualScore)
+    .slice(0, limit);
+};
 
 export const getRecommendedUsers = (currentUserInterests: string[] = ['technology', 'programming']) => {
   // Simple recommendation based on shared interests
