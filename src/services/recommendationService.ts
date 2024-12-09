@@ -87,6 +87,100 @@ const contents: Content[] = [
   }
 ];
 
+interface ContentFeatures {
+  id: string;
+  features: string[];
+  category: string;
+  tags: string[];
+  metadata: {
+    complexity: number;
+    popularity: number;
+    recency: number;
+  };
+}
+
+const contentFeatures: ContentFeatures[] = [
+  {
+    id: '1',
+    features: ['ai', 'development', 'tutorial'],
+    category: 'article',
+    tags: ['machine-learning', 'programming', 'beginner'],
+    metadata: {
+      complexity: 0.6,
+      popularity: 0.85,
+      recency: 0.95
+    }
+  },
+  {
+    id: '2',
+    features: ['photography', 'urban', 'technique'],
+    category: 'video',
+    tags: ['composition', 'lighting', 'intermediate'],
+    metadata: {
+      complexity: 0.4,
+      popularity: 0.75,
+      recency: 0.88
+    }
+  },
+  {
+    id: '3',
+    features: ['web', 'architecture', 'scalability'],
+    category: 'post',
+    tags: ['backend', 'performance', 'advanced'],
+    metadata: {
+      complexity: 0.8,
+      popularity: 0.65,
+      recency: 0.92
+    }
+  }
+];
+
+export const getContentBasedRecommendations = (
+  contentId: string,
+  limit: number = 5
+): { id: string; similarity: number; features: string[] }[] => {
+  const targetContent = contentFeatures.find(c => c.id === contentId);
+  if (!targetContent) return [];
+
+  const recommendations = contentFeatures
+    .filter(content => content.id !== contentId)
+    .map(content => {
+      // Calculate feature similarity
+      const sharedFeatures = content.features.filter(f => 
+        targetContent.features.includes(f)
+      );
+      
+      // Calculate tag similarity
+      const sharedTags = content.tags.filter(t => 
+        targetContent.tags.includes(t)
+      );
+
+      // Calculate metadata similarity using weighted Euclidean distance
+      const metadataSimilarity = 1 - Math.sqrt(
+        (Math.pow(content.metadata.complexity - targetContent.metadata.complexity, 2) * 0.3) +
+        (Math.pow(content.metadata.popularity - targetContent.metadata.popularity, 2) * 0.4) +
+        (Math.pow(content.metadata.recency - targetContent.metadata.recency, 2) * 0.3)
+      );
+
+      // Calculate overall similarity score (weighted average)
+      const similarity = (
+        (sharedFeatures.length / Math.max(content.features.length, targetContent.features.length) * 0.4) +
+        (sharedTags.length / Math.max(content.tags.length, targetContent.tags.length) * 0.3) +
+        (metadataSimilarity * 0.3)
+      );
+
+      return {
+        id: content.id,
+        similarity,
+        features: sharedFeatures
+      };
+    })
+    .sort((a, b) => b.similarity - a.similarity)
+    .slice(0, limit);
+
+  return recommendations;
+};
+
 export const getMutualRecommendations = (userId: string, limit: number = 5): MutualScore[] => {
   const currentUser = users.find(u => u.id === userId);
   if (!currentUser) return [];

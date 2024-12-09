@@ -129,6 +129,53 @@ export function OpenApiDocs() {
             }
           }
         }
+      },
+      "/recommendations/content-based": {
+        get: {
+          summary: "Get content-based recommendations",
+          description: "Retrieve recommendations based on content similarity and features",
+          parameters: [
+            {
+              name: "contentId",
+              in: "query",
+              required: true,
+              schema: { type: "string" }
+            },
+            {
+              name: "limit",
+              in: "query",
+              schema: { type: "integer", default: 5 }
+            }
+          ],
+          responses: {
+            "200": {
+              description: "Successful response",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      recommendations: {
+                        type: "array",
+                        items: {
+                          type: "object",
+                          properties: {
+                            id: { type: "string" },
+                            similarity: { type: "number" },
+                            features: {
+                              type: "array",
+                              items: { type: "string" }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     components: {

@@ -109,3 +109,25 @@ const getTopSharedInterests = (events: AnalyticsEvent[]) => {
     .slice(0, 5)
     .map(([interest]) => interest);
 };
+
+export const getLocationAnalytics = () => {
+  const locationEvents = analyticsEvents.filter(event => event.metadata?.location);
+  
+  // Group events by location and count engagements
+  const locationData = locationEvents.reduce((acc: { location: string; engagementCount: number }[], event) => {
+    const location = event.metadata?.location?.city || 'Unknown';
+    const existingLocation = acc.find(item => item.location === location);
+    
+    if (existingLocation) {
+      existingLocation.engagementCount++;
+    } else {
+      acc.push({ location, engagementCount: 1 });
+    }
+    
+    return acc;
+  }, []);
+
+  return locationData;
+};
+
+// ... keep existing code (other analytics functions)
