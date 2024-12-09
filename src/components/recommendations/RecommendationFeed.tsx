@@ -166,3 +166,4 @@ export function RecommendationFeed() {
       </section>
     </div>
   );
+} // Added the missing closing curly brace here
