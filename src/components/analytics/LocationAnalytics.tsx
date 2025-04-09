@@ -30,8 +30,7 @@ export function LocationAnalytics() {
                   </div>
                   <Progress 
                     value={(location.engagementCount / maxEngagement) * 100} 
-                    className="h-2" 
-                    indicatorClassName={`bg-gradient-to-r from-purple-500 to-blue-500`}
+                    className="h-2 bg-secondary [&>div]:bg-gradient-to-r [&>div]:from-purple-500 [&>div]:to-blue-500" 
                   />
                 </div>
               ))
@@ -51,35 +50,35 @@ export function LocationAnalytics() {
                     <span className="font-medium">San Francisco</span>
                     <span className="text-muted-foreground">1,245 engagements</span>
                   </div>
-                  <Progress value={100} className="h-2" indicatorClassName="bg-gradient-to-r from-purple-500 to-blue-500" />
+                  <Progress value={100} className="h-2 bg-secondary [&>div]:bg-gradient-to-r [&>div]:from-purple-500 [&>div]:to-blue-500" />
                 </div>
                 <div className="space-y-1">
                   <div className="flex justify-between text-sm">
                     <span className="font-medium">New York</span>
                     <span className="text-muted-foreground">998 engagements</span>
                   </div>
-                  <Progress value={80} className="h-2" indicatorClassName="bg-gradient-to-r from-purple-500 to-blue-500" />
+                  <Progress value={80} className="h-2 bg-secondary [&>div]:bg-gradient-to-r [&>div]:from-purple-500 [&>div]:to-blue-500" />
                 </div>
                 <div className="space-y-1">
                   <div className="flex justify-between text-sm">
                     <span className="font-medium">London</span>
                     <span className="text-muted-foreground">754 engagements</span>
                   </div>
-                  <Progress value={60} className="h-2" indicatorClassName="bg-gradient-to-r from-purple-500 to-blue-500" />
+                  <Progress value={60} className="h-2 bg-secondary [&>div]:bg-gradient-to-r [&>div]:from-purple-500 [&>div]:to-blue-500" />
                 </div>
                 <div className="space-y-1">
                   <div className="flex justify-between text-sm">
                     <span className="font-medium">Tokyo</span>
                     <span className="text-muted-foreground">621 engagements</span>
                   </div>
-                  <Progress value={50} className="h-2" indicatorClassName="bg-gradient-to-r from-purple-500 to-blue-500" />
+                  <Progress value={50} className="h-2 bg-secondary [&>div]:bg-gradient-to-r [&>div]:from-purple-500 [&>div]:to-blue-500" />
                 </div>
                 <div className="space-y-1">
                   <div className="flex justify-between text-sm">
                     <span className="font-medium">Berlin</span>
                     <span className="text-muted-foreground">432 engagements</span>
                   </div>
-                  <Progress value={35} className="h-2" indicatorClassName="bg-gradient-to-r from-purple-500 to-blue-500" />
+                  <Progress value={35} className="h-2 bg-secondary [&>div]:bg-gradient-to-r [&>div]:from-purple-500 [&>div]:to-blue-500" />
                 </div>
               </>
             )}
