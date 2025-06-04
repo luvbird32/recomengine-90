@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Download } from "lucide-react";
+import { Download, RefreshCw } from "lucide-react";
 import { StatisticsOverview } from "@/components/dashboard/StatisticsOverview";
 import { LocationAnalytics } from "@/components/analytics/LocationAnalytics";
 import { SystemStatus } from "@/components/dashboard/overview/SystemStatus";
@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 
 export function OverviewSection() {
   const [timePeriod, setTimePeriod] = useState("last30days");
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [systemStatuses, setSystemStatuses] = useState({
     apiServices: { status: 'operational', label: 'API Services' },
     recommendationEngine: { status: 'operational', label: 'Recommendation Engine' },
@@ -23,15 +24,22 @@ export function OverviewSection() {
   const { toast } = useToast();
 
   const handleExportData = () => {
-    const dataToExport = {
+    const analyticsData = {
       timePeriod,
-      exportDate: new Date().toISOString()
+      exportDate: new Date().toISOString(),
+      systemStatus: systemStatuses,
+      metrics: {
+        totalUsers: 1250,
+        activeUsers: 892,
+        recommendationAccuracy: 94.2,
+        apiUptime: 99.8
+      }
     };
     
-    const dataStr = JSON.stringify(dataToExport, null, 2);
+    const dataStr = JSON.stringify(analyticsData, null, 2);
     const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
     
-    const exportFileDefaultName = `analytics-data-${timePeriod}.json`;
+    const exportFileDefaultName = `analytics-data-${timePeriod}-${new Date().toISOString().split('T')[0]}.json`;
     
     const linkElement = document.createElement('a');
     linkElement.setAttribute('href', dataUri);
@@ -40,22 +48,51 @@ export function OverviewSection() {
     
     toast({
       title: "Data Exported",
-      description: `Analytics data for ${timePeriod} has been downloaded.`,
+      description: `Analytics data for ${timePeriod.replace(/([A-Z])/g, ' $1').toLowerCase()} has been downloaded.`,
     });
   };
 
-  const refreshSystemStatus = () => {
+  const refreshSystemStatus = async () => {
+    setIsRefreshing(true);
+    
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Simulate random status updates
     setSystemStatuses(prev => ({
       ...prev,
       contentDelivery: { 
         ...prev.contentDelivery, 
-        status: Math.random() > 0.5 ? 'operational' : 'degraded' 
+        status: Math.random() > 0.3 ? 'operational' : 'degraded' 
+      },
+      apiServices: {
+        ...prev.apiServices,
+        status: Math.random() > 0.9 ? 'degraded' : 'operational'
       }
     }));
+    
+    setIsRefreshing(false);
     
     toast({
       title: "System Status Refreshed",
       description: "Latest system status has been fetched.",
+    });
+  };
+
+  const refreshAllData = async () => {
+    setIsRefreshing(true);
+    
+    // Simulate refreshing all components
+    await Promise.all([
+      refreshSystemStatus(),
+      new Promise(resolve => setTimeout(resolve, 1000)) // Simulate other data refresh
+    ]);
+    
+    setIsRefreshing(false);
+    
+    toast({
+      title: "Dashboard Refreshed",
+      description: "All dashboard data has been updated.",
     });
   };
 
@@ -75,9 +112,19 @@ export function OverviewSection() {
               <SelectItem value="last24hours">Last 24 hours</SelectItem>
               <SelectItem value="last7days">Last 7 days</SelectItem>
               <SelectItem value="last30days">Last 30 days</SelectItem>
+              <SelectItem value="last90days">Last 90 days</SelectItem>
               <SelectItem value="alltime">All time</SelectItem>
             </SelectContent>
           </Select>
+          <Button 
+            onClick={refreshAllData} 
+            variant="outline" 
+            disabled={isRefreshing}
+            className="min-w-[100px]"
+          >
+            <RefreshCw className={`w-4 h-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+            {isRefreshing ? 'Refreshing...' : 'Refresh'}
+          </Button>
           <Button onClick={handleExportData} className="bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
             <Download className="w-4 h-4 mr-2" />
             Export Data
@@ -95,7 +142,8 @@ export function OverviewSection() {
         <RecommendationAccuracyChart />
         <SystemStatus 
           systemStatuses={systemStatuses} 
-          onRefresh={refreshSystemStatus} 
+          onRefresh={refreshSystemStatus}
+          isRefreshing={isRefreshing}
         />
       </div>
 
