@@ -4,8 +4,6 @@ import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
 import { OverviewSection } from "@/components/dashboard/sections/OverviewSection";
 import { AlgorithmExplanationSection } from "@/components/dashboard/sections/AlgorithmExplanationSection";
 import { IndustriesSection } from "@/components/dashboard/sections/IndustriesSection";
-import { ContentSection } from "@/components/dashboard/sections/ContentSection";
-import { SettingsSection } from "@/components/dashboard/sections/SettingsSection";
 import { DeveloperSection } from "@/components/dashboard/settings/DeveloperSection";
 
 const Dashboard = () => {
@@ -19,12 +17,8 @@ const Dashboard = () => {
         return <AlgorithmExplanationSection />;
       case "industries":
         return <IndustriesSection />;
-      case "content":
-        return <ContentSection />;
       case "developer":
         return <DeveloperSection />;
-      case "settings":
-        return <SettingsSection />;
       default:
         return <OverviewSection />;
     }
