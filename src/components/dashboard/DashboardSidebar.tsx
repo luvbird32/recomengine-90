@@ -18,7 +18,7 @@ interface DashboardSidebarProps {
 export function DashboardSidebar({ children, activeSection, onSectionChange }: DashboardSidebarProps) {
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen">
+      <div className="flex min-h-screen w-full">
         <Sidebar collapsible="icon" variant="sidebar">
           <SidebarHeader>
             <DashboardSidebarHeader />
@@ -30,7 +30,7 @@ export function DashboardSidebar({ children, activeSection, onSectionChange }: D
             />
           </SidebarContent>
         </Sidebar>
-        <SidebarInset>
+        <SidebarInset className="flex-1">
           {children}
         </SidebarInset>
       </div>
