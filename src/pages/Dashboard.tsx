@@ -5,6 +5,7 @@ import { OverviewSection } from "@/components/dashboard/sections/OverviewSection
 import { AlgorithmExplanationSection } from "@/components/dashboard/sections/AlgorithmExplanationSection";
 import { IndustriesSection } from "@/components/dashboard/sections/IndustriesSection";
 import { ContentSection } from "@/components/dashboard/sections/ContentSection";
+import { SettingsSection } from "@/components/dashboard/sections/SettingsSection";
 
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState("overview");
@@ -19,6 +20,8 @@ const Dashboard = () => {
         return <IndustriesSection />;
       case "content":
         return <ContentSection />;
+      case "settings":
+        return <SettingsSection />;
       default:
         return <OverviewSection />;
     }
