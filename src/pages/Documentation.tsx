@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowRight, BookOpen, Code2, Zap, Users, Github, Download, Play, Settings, Database, BarChart3, Shield } from "lucide-react";
+import { ArrowRight, BookOpen, Code2, Zap, Users, Github, Download, Settings, Database, BarChart3, Shield, Brain, Cpu, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Documentation = () => {
@@ -15,13 +15,13 @@ const Documentation = () => {
             Documentation
           </h1>
           <p className="text-xl text-muted-foreground mb-8">
-            Everything you need to build powerful recommendation systems
+            Complete guide to our open source recommendation engine dashboard
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button asChild>
               <Link to="/dashboard">
-                <Play className="mr-2 h-5 w-5" />
-                Try Live Demo
+                <BarChart3 className="mr-2 h-5 w-5" />
+                View Dashboard
               </Link>
             </Button>
             <Button variant="outline">
@@ -31,38 +31,38 @@ const Documentation = () => {
           </div>
         </div>
 
-        {/* Quick Start */}
+        {/* What This Project Does */}
         <div className="max-w-6xl mx-auto mb-16">
           <Card className="backdrop-blur-md bg-white/30 border border-white/30">
             <CardHeader>
               <CardTitle className="flex items-center">
-                <Zap className="mr-2 h-6 w-6 text-yellow-500" />
-                Quick Start
+                <Brain className="mr-2 h-6 w-6 text-purple-500" />
+                What This Project Provides
               </CardTitle>
-              <CardDescription>Get up and running in minutes</CardDescription>
+              <CardDescription>A comprehensive recommendation engine dashboard with multiple algorithms</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
                   <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Download className="h-6 w-6 text-purple-600" />
+                    <BarChart3 className="h-6 w-6 text-purple-600" />
                   </div>
-                  <h3 className="font-semibold mb-2">1. Install</h3>
-                  <p className="text-sm text-muted-foreground">Clone the repository and install dependencies</p>
+                  <h3 className="font-semibold mb-2">Interactive Dashboard</h3>
+                  <p className="text-sm text-muted-foreground">Monitor recommendation performance with real-time analytics</p>
                 </div>
                 <div className="text-center">
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Settings className="h-6 w-6 text-blue-600" />
+                    <Cpu className="h-6 w-6 text-blue-600" />
                   </div>
-                  <h3 className="font-semibold mb-2">2. Configure</h3>
-                  <p className="text-sm text-muted-foreground">Set up your algorithms and data sources</p>
+                  <h3 className="font-semibold mb-2">Multiple Algorithms</h3>
+                  <p className="text-sm text-muted-foreground">Collaborative, content-based, and hybrid recommendation systems</p>
                 </div>
                 <div className="text-center">
                   <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Play className="h-6 w-6 text-green-600" />
+                    <TrendingUp className="h-6 w-6 text-green-600" />
                   </div>
-                  <h3 className="font-semibold mb-2">3. Deploy</h3>
-                  <p className="text-sm text-muted-foreground">Start generating recommendations</p>
+                  <h3 className="font-semibold mb-2">Industry Templates</h3>
+                  <p className="text-sm text-muted-foreground">Pre-configured setups for e-commerce, streaming, and more</p>
                 </div>
               </div>
             </CardContent>
@@ -71,49 +71,61 @@ const Documentation = () => {
 
         {/* Main Documentation Tabs */}
         <div className="max-w-6xl mx-auto">
-          <Tabs defaultValue="api" className="w-full">
+          <Tabs defaultValue="overview" className="w-full">
             <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-8">
-              <TabsTrigger value="api">API Reference</TabsTrigger>
+              <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="algorithms">Algorithms</TabsTrigger>
-              <TabsTrigger value="deployment">Deployment</TabsTrigger>
-              <TabsTrigger value="examples">Examples</TabsTrigger>
+              <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+              <TabsTrigger value="setup">Setup</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="api" className="space-y-6">
+            <TabsContent value="overview" className="space-y-6">
               <Card className="backdrop-blur-md bg-white/30 border border-white/30">
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <Code2 className="mr-2 h-6 w-6" />
-                    API Reference
+                    <BookOpen className="mr-2 h-6 w-6" />
+                    Project Overview
                   </CardTitle>
-                  <CardDescription>Complete API documentation for all endpoints</CardDescription>
+                  <CardDescription>Understanding the recommendation engine dashboard</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
-                      <h4 className="font-semibold">Core Endpoints</h4>
+                      <h4 className="font-semibold">Key Features</h4>
                       <div className="space-y-2">
-                        <div className="flex items-center justify-between p-3 bg-white/50 rounded-lg">
-                          <span className="font-mono text-sm">GET /recommendations</span>
-                          <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">GET</span>
+                        <div className="flex items-start gap-3 p-3 bg-white/50 rounded-lg">
+                          <BarChart3 className="h-5 w-5 text-blue-600 mt-0.5" />
+                          <div>
+                            <span className="font-medium">Analytics Dashboard</span>
+                            <p className="text-sm text-muted-foreground">Real-time metrics and performance tracking</p>
+                          </div>
                         </div>
-                        <div className="flex items-center justify-between p-3 bg-white/50 rounded-lg">
-                          <span className="font-mono text-sm">POST /track</span>
-                          <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">POST</span>
+                        <div className="flex items-start gap-3 p-3 bg-white/50 rounded-lg">
+                          <Users className="h-5 w-5 text-green-600 mt-0.5" />
+                          <div>
+                            <span className="font-medium">User Management</span>
+                            <p className="text-sm text-muted-foreground">Comprehensive user analytics and segmentation</p>
+                          </div>
                         </div>
-                        <div className="flex items-center justify-between p-3 bg-white/50 rounded-lg">
-                          <span className="font-mono text-sm">GET /analytics</span>
-                          <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">GET</span>
+                        <div className="flex items-start gap-3 p-3 bg-white/50 rounded-lg">
+                          <Settings className="h-5 w-5 text-purple-600 mt-0.5" />
+                          <div>
+                            <span className="font-medium">Algorithm Configuration</span>
+                            <p className="text-sm text-muted-foreground">Fine-tune recommendation algorithms</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div className="space-y-4">
-                      <h4 className="font-semibold">Authentication</h4>
+                      <h4 className="font-semibold">Technology Stack</h4>
                       <div className="p-4 bg-white/50 rounded-lg">
-                        <p className="text-sm text-muted-foreground mb-2">No API keys required! All endpoints are open for local deployment.</p>
-                        <code className="text-xs bg-gray-100 p-2 rounded block">
-                          curl -X GET "http://localhost:3000/api/recommendations?userId=123"
-                        </code>
+                        <ul className="space-y-2 text-sm">
+                          <li><strong>Frontend:</strong> React, TypeScript, Vite</li>
+                          <li><strong>UI:</strong> Tailwind CSS, shadcn/ui</li>
+                          <li><strong>Charts:</strong> Recharts</li>
+                          <li><strong>State:</strong> TanStack Query</li>
+                          <li><strong>Icons:</strong> Lucide React</li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -134,12 +146,12 @@ const Documentation = () => {
                     <ul className="space-y-2 text-sm">
                       <li>• User-based collaborative filtering</li>
                       <li>• Item-based collaborative filtering</li>
-                      <li>• Matrix factorization (SVD, NMF)</li>
-                      <li>• Neighborhood methods</li>
+                      <li>• Matrix factorization techniques</li>
+                      <li>• Similarity calculations</li>
                     </ul>
-                    <Button size="sm" variant="outline" className="mt-4">
-                      View Code <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <div className="mt-4 p-3 bg-white/50 rounded text-xs">
+                      <code>collaborativeFiltering.ts</code> - Implementation available in services
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -157,9 +169,9 @@ const Documentation = () => {
                       <li>• Cosine similarity</li>
                       <li>• Content analysis</li>
                     </ul>
-                    <Button size="sm" variant="outline" className="mt-4">
-                      View Code <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <div className="mt-4 p-3 bg-white/50 rounded text-xs">
+                      <code>contentBasedRecommender.ts</code> - Implementation available
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -177,9 +189,9 @@ const Documentation = () => {
                       <li>• Mixed recommendations</li>
                       <li>• Ensemble methods</li>
                     </ul>
-                    <Button size="sm" variant="outline" className="mt-4">
-                      View Code <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <div className="mt-4 p-3 bg-white/50 rounded text-xs">
+                      <code>hybridRecommender.ts</code> - Implementation available
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -187,146 +199,177 @@ const Documentation = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center">
                       <BarChart3 className="mr-2 h-6 w-6 text-orange-600" />
-                      Advanced Techniques
+                      Advanced Features
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
-                      <li>• Deep learning integration</li>
-                      <li>• Real-time learning</li>
-                      <li>• Context-aware recommendations</li>
-                      <li>• Multi-armed bandits</li>
+                      <li>• Mutual recommendations</li>
+                      <li>• User behavior tracking</li>
+                      <li>• Advanced similarity metrics</li>
+                      <li>• Performance analytics</li>
                     </ul>
-                    <Button size="sm" variant="outline" className="mt-4">
-                      View Code <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <div className="mt-4 p-3 bg-white/50 rounded text-xs">
+                      <code>ensemble.ts</code> - Advanced implementations
+                    </div>
                   </CardContent>
                 </Card>
               </div>
             </TabsContent>
 
-            <TabsContent value="deployment" className="space-y-6">
+            <TabsContent value="dashboard" className="space-y-6">
               <Card className="backdrop-blur-md bg-white/30 border border-white/30">
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <Database className="mr-2 h-6 w-6" />
-                    Deployment Options
+                    <BarChart3 className="mr-2 h-6 w-6" />
+                    Dashboard Features
                   </CardTitle>
-                  <CardDescription>Multiple ways to deploy your recommendation engine</CardDescription>
+                  <CardDescription>Explore the comprehensive analytics and management interface</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="p-4 border rounded-lg bg-white/50">
-                      <h4 className="font-semibold mb-2">Docker</h4>
-                      <p className="text-sm text-muted-foreground mb-4">Containerized deployment for any environment</p>
-                      <code className="text-xs bg-gray-100 p-2 rounded block mb-2">
-                        docker build -t rec-engine .
-                      </code>
-                      <code className="text-xs bg-gray-100 p-2 rounded block">
-                        docker run -p 3000:3000 rec-engine
-                      </code>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <h4 className="font-semibold">Analytics & Monitoring</h4>
+                      <div className="space-y-3">
+                        <div className="p-3 border rounded-lg bg-white/50">
+                          <h5 className="font-medium mb-1">Real-time Metrics</h5>
+                          <p className="text-sm text-muted-foreground">Track user engagement, click-through rates, and recommendation performance</p>
+                        </div>
+                        <div className="p-3 border rounded-lg bg-white/50">
+                          <h5 className="font-medium mb-1">User Analytics</h5>
+                          <p className="text-sm text-muted-foreground">Comprehensive user behavior analysis and segmentation</p>
+                        </div>
+                        <div className="p-3 border rounded-lg bg-white/50">
+                          <h5 className="font-medium mb-1">Algorithm Performance</h5>
+                          <p className="text-sm text-muted-foreground">Compare accuracy and effectiveness of different algorithms</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="p-4 border rounded-lg bg-white/50">
-                      <h4 className="font-semibold mb-2">Cloud</h4>
-                      <p className="text-sm text-muted-foreground mb-4">Deploy to Vercel, Netlify, or AWS</p>
-                      <code className="text-xs bg-gray-100 p-2 rounded block mb-2">
-                        vercel --prod
-                      </code>
-                      <code className="text-xs bg-gray-100 p-2 rounded block">
-                        netlify deploy --prod
-                      </code>
+                    <div className="space-y-4">
+                      <h4 className="font-semibold">Management Tools</h4>
+                      <div className="space-y-3">
+                        <div className="p-3 border rounded-lg bg-white/50">
+                          <h5 className="font-medium mb-1">Industry Templates</h5>
+                          <p className="text-sm text-muted-foreground">Pre-configured setups for e-commerce, streaming, news, and social platforms</p>
+                        </div>
+                        <div className="p-3 border rounded-lg bg-white/50">
+                          <h5 className="font-medium mb-1">User Management</h5>
+                          <p className="text-sm text-muted-foreground">Manage user profiles, preferences, and recommendation history</p>
+                        </div>
+                        <div className="p-3 border rounded-lg bg-white/50">
+                          <h5 className="font-medium mb-1">Developer Tools</h5>
+                          <p className="text-sm text-muted-foreground">Testing tools and configuration options for developers</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="p-4 border rounded-lg bg-white/50">
-                      <h4 className="font-semibold mb-2">Self-Hosted</h4>
-                      <p className="text-sm text-muted-foreground mb-4">Run on your own infrastructure</p>
-                      <code className="text-xs bg-gray-100 p-2 rounded block mb-2">
-                        npm run build
-                      </code>
-                      <code className="text-xs bg-gray-100 p-2 rounded block">
-                        npm run preview
-                      </code>
-                    </div>
+                  </div>
+                  <div className="mt-6 text-center">
+                    <Button asChild>
+                      <Link to="/dashboard" className="flex items-center">
+                        <BarChart3 className="mr-2 h-4 w-4" />
+                        Explore Dashboard <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
             </TabsContent>
 
-            <TabsContent value="examples" className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card className="backdrop-blur-md bg-white/30 border border-white/30">
-                  <CardHeader>
-                    <CardTitle>E-commerce Example</CardTitle>
-                    <CardDescription>Product recommendations for online stores</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="p-3 bg-white/50 rounded">
-                        <code className="text-sm">
-                          getRecommendations(&#123;<br/>
-                          &nbsp;&nbsp;userId: 'customer-123',<br/>
-                          &nbsp;&nbsp;algorithm: 'hybrid',<br/>
-                          &nbsp;&nbsp;context: 'product-page'<br/>
-                          &#125;)
-                        </code>
+            <TabsContent value="setup" className="space-y-6">
+              <Card className="backdrop-blur-md bg-white/30 border border-white/30">
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Download className="mr-2 h-6 w-6" />
+                    Getting Started
+                  </CardTitle>
+                  <CardDescription>Set up the recommendation engine dashboard locally</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="font-semibold mb-3">Installation</h4>
+                      <div className="space-y-2">
+                        <div className="p-3 bg-gray-900 text-white rounded-lg">
+                          <code className="text-sm">git clone https://github.com/your-org/recommendation-engine.git</code>
+                        </div>
+                        <div className="p-3 bg-gray-900 text-white rounded-lg">
+                          <code className="text-sm">cd recommendation-engine</code>
+                        </div>
+                        <div className="p-3 bg-gray-900 text-white rounded-lg">
+                          <code className="text-sm">npm install</code>
+                        </div>
+                        <div className="p-3 bg-gray-900 text-white rounded-lg">
+                          <code className="text-sm">npm run dev</code>
+                        </div>
                       </div>
-                      <Button size="sm" variant="outline" className="w-full">
-                        <Link to="/dashboard" className="flex items-center">
-                          View Live Demo <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
                     </div>
-                  </CardContent>
-                </Card>
+                    
+                    <div>
+                      <h4 className="font-semibold mb-3">Project Structure</h4>
+                      <div className="p-4 bg-white/50 rounded-lg">
+                        <pre className="text-sm text-muted-foreground">
+{`src/
+├── components/          # React components
+│   ├── dashboard/       # Dashboard-specific components
+│   ├── ui/             # Reusable UI components
+│   └── ...
+├── services/           # Business logic and algorithms
+│   ├── recommendation/ # Recommendation algorithms
+│   └── ...
+├── pages/              # Page components
+└── ...`}
+                        </pre>
+                      </div>
+                    </div>
 
-                <Card className="backdrop-blur-md bg-white/30 border border-white/30">
-                  <CardHeader>
-                    <CardTitle>Streaming Platform</CardTitle>
-                    <CardDescription>Content recommendations for media platforms</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="p-3 bg-white/50 rounded">
-                        <code className="text-sm">
-                          getRecommendations(&#123;<br/>
-                          &nbsp;&nbsp;userId: 'viewer-456',<br/>
-                          &nbsp;&nbsp;algorithm: 'collaborative',<br/>
-                          &nbsp;&nbsp;filters: &#123; genre: 'drama' &#125;<br/>
-                          &#125;)
-                        </code>
+                    <div>
+                      <h4 className="font-semibold mb-3">Available Scripts</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="p-3 border rounded-lg bg-white/50">
+                          <code className="text-sm font-mono">npm run dev</code>
+                          <p className="text-xs text-muted-foreground mt-1">Start development server</p>
+                        </div>
+                        <div className="p-3 border rounded-lg bg-white/50">
+                          <code className="text-sm font-mono">npm run build</code>
+                          <p className="text-xs text-muted-foreground mt-1">Build for production</p>
+                        </div>
+                        <div className="p-3 border rounded-lg bg-white/50">
+                          <code className="text-sm font-mono">npm run preview</code>
+                          <p className="text-xs text-muted-foreground mt-1">Preview production build</p>
+                        </div>
+                        <div className="p-3 border rounded-lg bg-white/50">
+                          <code className="text-sm font-mono">npm run lint</code>
+                          <p className="text-xs text-muted-foreground mt-1">Run ESLint</p>
+                        </div>
                       </div>
-                      <Button size="sm" variant="outline" className="w-full">
-                        <Link to="/dashboard" className="flex items-center">
-                          View Live Demo <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
           </Tabs>
         </div>
 
-        {/* Community Section */}
+        {/* Contributing Section */}
         <div className="max-w-4xl mx-auto mt-16 text-center">
           <Card className="backdrop-blur-md bg-white/30 border border-white/30">
             <CardHeader>
-              <CardTitle>Join Our Community</CardTitle>
-              <CardDescription>Get help, share ideas, and contribute to the project</CardDescription>
+              <CardTitle>Contributing</CardTitle>
+              <CardDescription>Help improve this open source recommendation engine</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button variant="outline">
                   <Github className="mr-2 h-5 w-5" />
-                  GitHub Discussions
-                </Button>
-                <Button variant="outline">
-                  <Users className="mr-2 h-5 w-5" />
-                  Discord Community
+                  GitHub Repository
                 </Button>
                 <Button variant="outline">
                   <BookOpen className="mr-2 h-5 w-5" />
                   Contributing Guide
+                </Button>
+                <Button variant="outline">
+                  <Code2 className="mr-2 h-5 w-5" />
+                  Report Issues
                 </Button>
               </div>
             </CardContent>
