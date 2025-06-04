@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Code, FileText, Folder, ExternalLink, Download, CheckCircle } from "lucide-react";
+import { Code, FileText, Folder, ExternalLink, Download, CheckCircle, Github, GitFork, Star, Users, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -47,6 +47,39 @@ export function DeveloperSection() {
       description: "Mathematical similarity functions (Cosine, Jaccard, Pearson)",
       path: "src/services/recommendation/advancedSimilarity.ts",
       status: "active"
+    }
+  ];
+
+  const contributionAreas = [
+    {
+      title: "Algorithm Development",
+      description: "Implement new recommendation algorithms or improve existing ones",
+      difficulty: "Advanced",
+      files: ["src/services/recommendation/"]
+    },
+    {
+      title: "UI/UX Improvements", 
+      description: "Enhance the dashboard interface and user experience",
+      difficulty: "Intermediate",
+      files: ["src/components/dashboard/", "src/pages/"]
+    },
+    {
+      title: "Documentation",
+      description: "Improve code documentation, README, and API guides",
+      difficulty: "Beginner",
+      files: ["README.md", "docs/"]
+    },
+    {
+      title: "Testing",
+      description: "Add unit tests, integration tests, and performance benchmarks",
+      difficulty: "Intermediate", 
+      files: ["src/**/*.test.ts", "tests/"]
+    },
+    {
+      title: "Performance Optimization",
+      description: "Optimize algorithm performance and reduce memory usage",
+      difficulty: "Advanced",
+      files: ["src/services/recommendation/"]
     }
   ];
 
@@ -154,6 +187,15 @@ export function DeveloperSection() {
     }
   };
 
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case "Beginner": return "bg-green-100 text-green-800 border-green-200";
+      case "Intermediate": return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "Advanced": return "bg-red-100 text-red-800 border-red-200";
+      default: return "bg-gray-100 text-gray-800 border-gray-200";
+    }
+  };
+
   return (
     <div className="container p-6 mx-auto max-w-7xl">
       <div className="mb-6">
@@ -164,6 +206,202 @@ export function DeveloperSection() {
       </div>
 
       <div className="space-y-6">
+        {/* GitHub Open Source Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Github className="h-5 w-5" />
+              Open Source Community
+            </CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Join our open source community and contribute to the recommendation engine
+            </p>
+          </CardHeader>
+          <CardContent>
+            <Tabs defaultValue="getting-started" className="w-full">
+              <TabsList className="grid w-full grid-cols-4">
+                <TabsTrigger value="getting-started">Getting Started</TabsTrigger>
+                <TabsTrigger value="contribute">How to Contribute</TabsTrigger>
+                <TabsTrigger value="areas">Contribution Areas</TabsTrigger>
+                <TabsTrigger value="guidelines">Guidelines</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="getting-started" className="space-y-4">
+                <div className="grid gap-4">
+                  <div className="flex items-center justify-between p-4 bg-blue-50 border border-blue-200 rounded-md">
+                    <div className="flex items-center gap-3">
+                      <Github className="h-6 w-6 text-blue-600" />
+                      <div>
+                        <h3 className="font-semibold">Repository</h3>
+                        <p className="text-sm text-muted-foreground">github.com/your-org/recommendation-engine</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="outline" className="flex items-center gap-1">
+                        <Star className="h-3 w-3" />
+                        1.2k
+                      </Badge>
+                      <Badge variant="outline" className="flex items-center gap-1">
+                        <GitFork className="h-3 w-3" />
+                        245
+                      </Badge>
+                      <Button variant="outline" size="sm">
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        View on GitHub
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-900 text-gray-100 p-4 rounded-md">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm text-gray-400">Quick Setup</span>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => handleCopyPath(`# Clone the repository
+git clone https://github.com/your-org/recommendation-engine.git
+cd recommendation-engine
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Run tests
+npm test`, "Setup Commands")}
+                      >
+                        {copiedItem === "Setup Commands" ? (
+                          <>
+                            <CheckCircle className="h-4 w-4 text-green-600" />
+                            Copied
+                          </>
+                        ) : (
+                          "Copy"
+                        )}
+                      </Button>
+                    </div>
+                    <pre className="text-sm overflow-x-auto">
+                      <code>{`# Clone the repository
+git clone https://github.com/your-org/recommendation-engine.git
+cd recommendation-engine
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Run tests
+npm test`}</code>
+                    </pre>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="contribute" className="space-y-4">
+                <div className="space-y-4">
+                  <div className="border rounded-lg p-4">
+                    <h3 className="font-semibold mb-2 flex items-center gap-2">
+                      <GitFork className="h-4 w-4" />
+                      1. Fork & Clone
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Fork the repository and clone it to your local machine
+                    </p>
+                    <div className="bg-gray-100 p-2 rounded text-sm font-mono">
+                      git clone https://github.com/your-username/recommendation-engine.git
+                    </div>
+                  </div>
+                  
+                  <div className="border rounded-lg p-4">
+                    <h3 className="font-semibold mb-2 flex items-center gap-2">
+                      <Code className="h-4 w-4" />
+                      2. Create Branch
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Create a feature branch for your changes
+                    </p>
+                    <div className="bg-gray-100 p-2 rounded text-sm font-mono">
+                      git checkout -b feature/your-feature-name
+                    </div>
+                  </div>
+                  
+                  <div className="border rounded-lg p-4">
+                    <h3 className="font-semibold mb-2 flex items-center gap-2">
+                      <Users className="h-4 w-4" />
+                      3. Submit PR
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Push your changes and create a pull request with a clear description
+                    </p>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="areas" className="space-y-4">
+                <div className="grid gap-4">
+                  {contributionAreas.map((area, index) => (
+                    <div key={index} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                      <div className="flex items-start justify-between mb-2">
+                        <h3 className="font-semibold">{area.title}</h3>
+                        <Badge variant="outline" className={`text-xs ${getDifficultyColor(area.difficulty)}`}>
+                          {area.difficulty}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-3">{area.description}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {area.files.map((file, fileIndex) => (
+                          <Badge key={fileIndex} variant="secondary" className="text-xs font-mono">
+                            {file}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="guidelines" className="space-y-4">
+                <div className="space-y-4">
+                  <div className="border rounded-lg p-4">
+                    <h3 className="font-semibold mb-2 flex items-center gap-2">
+                      <BookOpen className="h-4 w-4" />
+                      Code Standards
+                    </h3>
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li>• Follow TypeScript best practices</li>
+                      <li>• Maintain 80%+ test coverage</li>
+                      <li>• Use meaningful variable and function names</li>
+                      <li>• Add JSDoc comments for public APIs</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="border rounded-lg p-4">
+                    <h3 className="font-semibold mb-2">Pull Request Guidelines</h3>
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li>• Clear, descriptive titles and descriptions</li>
+                      <li>• Reference related issues</li>
+                      <li>• Include tests for new features</li>
+                      <li>• Ensure all CI checks pass</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="border rounded-lg p-4">
+                    <h3 className="font-semibold mb-2">Community Guidelines</h3>
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      <li>• Be respectful and inclusive</li>
+                      <li>• Help newcomers get started</li>
+                      <li>• Use GitHub Discussions for questions</li>
+                      <li>• Follow our Code of Conduct</li>
+                    </ul>
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+
         {/* Algorithm Files */}
         <Card>
           <CardHeader>
