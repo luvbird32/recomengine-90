@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowRight, BookOpen, Code2, Zap, Users, Github, Download, Settings, Database, BarChart3, Shield, Brain, Cpu, TrendingUp } from "lucide-react";
+import { ArrowRight, BookOpen, Code2, Users, Github, Download, BarChart3, Brain, Cpu, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Documentation = () => {
@@ -72,11 +72,10 @@ const Documentation = () => {
         {/* Main Documentation Tabs */}
         <div className="max-w-6xl mx-auto">
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-8">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 mb-8">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="algorithms">Algorithms</TabsTrigger>
               <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-              <TabsTrigger value="setup">Setup</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6">
@@ -108,10 +107,10 @@ const Documentation = () => {
                           </div>
                         </div>
                         <div className="flex items-start gap-3 p-3 bg-white/50 rounded-lg">
-                          <Settings className="h-5 w-5 text-purple-600 mt-0.5" />
+                          <Brain className="h-5 w-5 text-purple-600 mt-0.5" />
                           <div>
-                            <span className="font-medium">Algorithm Configuration</span>
-                            <p className="text-sm text-muted-foreground">Fine-tune recommendation algorithms</p>
+                            <span className="font-medium">Algorithm Showcase</span>
+                            <p className="text-sm text-muted-foreground">Visual demonstration of recommendation algorithms</p>
                           </div>
                         </div>
                       </div>
@@ -178,7 +177,7 @@ const Documentation = () => {
                 <Card className="backdrop-blur-md bg-white/30 border border-white/30">
                   <CardHeader>
                     <CardTitle className="flex items-center">
-                      <Zap className="mr-2 h-6 w-6 text-purple-600" />
+                      <Brain className="mr-2 h-6 w-6 text-purple-600" />
                       Hybrid Methods
                     </CardTitle>
                   </CardHeader>
@@ -257,8 +256,8 @@ const Documentation = () => {
                           <p className="text-sm text-muted-foreground">Manage user profiles, preferences, and recommendation history</p>
                         </div>
                         <div className="p-3 border rounded-lg bg-white/50">
-                          <h5 className="font-medium mb-1">Developer Tools</h5>
-                          <p className="text-sm text-muted-foreground">Testing tools and configuration options for developers</p>
+                          <h5 className="font-medium mb-1">Algorithm Showcase</h5>
+                          <p className="text-sm text-muted-foreground">Interactive demonstrations of how different algorithms work</p>
                         </div>
                       </div>
                     </div>
@@ -270,79 +269,6 @@ const Documentation = () => {
                         Explore Dashboard <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="setup" className="space-y-6">
-              <Card className="backdrop-blur-md bg-white/30 border border-white/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Download className="mr-2 h-6 w-6" />
-                    Getting Started
-                  </CardTitle>
-                  <CardDescription>Set up the recommendation engine dashboard locally</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div>
-                      <h4 className="font-semibold mb-3">Installation</h4>
-                      <div className="space-y-2">
-                        <div className="p-3 bg-gray-900 text-white rounded-lg">
-                          <code className="text-sm">git clone https://github.com/your-org/recommendation-engine.git</code>
-                        </div>
-                        <div className="p-3 bg-gray-900 text-white rounded-lg">
-                          <code className="text-sm">cd recommendation-engine</code>
-                        </div>
-                        <div className="p-3 bg-gray-900 text-white rounded-lg">
-                          <code className="text-sm">npm install</code>
-                        </div>
-                        <div className="p-3 bg-gray-900 text-white rounded-lg">
-                          <code className="text-sm">npm run dev</code>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-semibold mb-3">Project Structure</h4>
-                      <div className="p-4 bg-white/50 rounded-lg">
-                        <pre className="text-sm text-muted-foreground">
-{`src/
-├── components/          # React components
-│   ├── dashboard/       # Dashboard-specific components
-│   ├── ui/             # Reusable UI components
-│   └── ...
-├── services/           # Business logic and algorithms
-│   ├── recommendation/ # Recommendation algorithms
-│   └── ...
-├── pages/              # Page components
-└── ...`}
-                        </pre>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold mb-3">Available Scripts</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="p-3 border rounded-lg bg-white/50">
-                          <code className="text-sm font-mono">npm run dev</code>
-                          <p className="text-xs text-muted-foreground mt-1">Start development server</p>
-                        </div>
-                        <div className="p-3 border rounded-lg bg-white/50">
-                          <code className="text-sm font-mono">npm run build</code>
-                          <p className="text-xs text-muted-foreground mt-1">Build for production</p>
-                        </div>
-                        <div className="p-3 border rounded-lg bg-white/50">
-                          <code className="text-sm font-mono">npm run preview</code>
-                          <p className="text-xs text-muted-foreground mt-1">Preview production build</p>
-                        </div>
-                        <div className="p-3 border rounded-lg bg-white/50">
-                          <code className="text-sm font-mono">npm run lint</code>
-                          <p className="text-xs text-muted-foreground mt-1">Run ESLint</p>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </CardContent>
               </Card>
