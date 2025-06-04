@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
 import { OverviewSection } from "@/components/dashboard/sections/OverviewSection";
+import { AlgorithmExplanationSection } from "@/components/dashboard/sections/AlgorithmExplanationSection";
 import { AnalyticsSection } from "@/components/dashboard/sections/AnalyticsSection";
 import { UsersSection } from "@/components/dashboard/sections/UsersSection";
 import { ContentSection } from "@/components/dashboard/sections/ContentSection";
@@ -15,6 +16,8 @@ const Dashboard = () => {
     switch (activeSection) {
       case "overview":
         return <OverviewSection />;
+      case "algorithms":
+        return <AlgorithmExplanationSection />;
       case "analytics":
         return <AnalyticsSection />;
       case "users":
