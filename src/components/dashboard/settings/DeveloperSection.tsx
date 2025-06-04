@@ -1,16 +1,13 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Code, FileText, Folder, ExternalLink, Download, CheckCircle, AlertCircle } from "lucide-react";
+import { Code, FileText, Folder, ExternalLink, Download, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function DeveloperSection() {
-  const [apiKey, setApiKey] = useState<string>("");
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [keyGenerated, setKeyGenerated] = useState(false);
   const [copiedItem, setCopiedItem] = useState<string>("");
   const { toast } = useToast();
 
@@ -53,27 +50,6 @@ export function DeveloperSection() {
     }
   ];
 
-  const generateApiKey = async () => {
-    setIsGenerating(true);
-    
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    const key = 'rec_' + Array.from(crypto.getRandomValues(new Uint8Array(32)))
-      .map(b => b.toString(16).padStart(2, '0'))
-      .join('')
-      .slice(0, 32);
-    
-    setApiKey(key);
-    setKeyGenerated(true);
-    setIsGenerating(false);
-    
-    toast({
-      title: "API Key Generated",
-      description: "Your new API key has been generated successfully.",
-    });
-  };
-
   const handleCopyPath = async (path: string, itemName?: string) => {
     try {
       await navigator.clipboard.writeText(path);
@@ -100,9 +76,55 @@ export function DeveloperSection() {
       info: {
         title: "Recommendation Engine API",
         version: "1.0.0",
-        description: "API for generating and managing personalized recommendations"
+        description: "Open source recommendation engine - no authentication required"
       },
-      // ... rest of the spec would be here
+      paths: {
+        "/recommendations": {
+          get: {
+            summary: "Get recommendations",
+            description: "Retrieve personalized recommendations for a user",
+            parameters: [
+              {
+                name: "userId",
+                in: "query",
+                required: true,
+                schema: { type: "string" }
+              },
+              {
+                name: "limit",
+                in: "query",
+                schema: { type: "integer", default: 10 }
+              }
+            ],
+            responses: {
+              "200": {
+                description: "Successful response",
+                content: {
+                  "application/json": {
+                    schema: {
+                      type: "object",
+                      properties: {
+                        recommendations: {
+                          type: "array",
+                          items: {
+                            type: "object",
+                            properties: {
+                              id: { type: "string" },
+                              title: { type: "string" },
+                              score: { type: "number" },
+                              type: { type: "string" }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     };
     
     const dataStr = JSON.stringify(openApiSpec, null, 2);
@@ -137,81 +159,11 @@ export function DeveloperSection() {
       <div className="mb-6">
         <h1 className="text-3xl font-bold mb-2">Developer Resources</h1>
         <p className="text-muted-foreground">
-          Access algorithm source files, documentation, and development tools for the recommendation engine.
+          Access algorithm source files, documentation, and development tools for the open-source recommendation engine.
         </p>
       </div>
 
       <div className="space-y-6">
-        {/* API Key Generation */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Code className="h-5 w-5" />
-              API Key Management
-            </CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Generate and manage your API keys for accessing the recommendation engine
-            </p>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-4">
-              <Button 
-                onClick={generateApiKey} 
-                disabled={isGenerating}
-                className="gap-2"
-              >
-                {isGenerating ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <Code className="h-4 w-4" />
-                    Generate New API Key
-                  </>
-                )}
-              </Button>
-              {keyGenerated && (
-                <Badge variant="outline" className="gap-1">
-                  <CheckCircle className="h-3 w-3" />
-                  Key Ready
-                </Badge>
-              )}
-            </div>
-            
-            {apiKey && (
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Input
-                    value={apiKey}
-                    readOnly
-                    className="font-mono text-sm bg-gray-50"
-                  />
-                  <Button 
-                    variant="outline" 
-                    onClick={() => handleCopyPath(apiKey, "API Key")}
-                    className="gap-1"
-                  >
-                    {copiedItem === "API Key" ? (
-                      <>
-                        <CheckCircle className="h-4 w-4 text-green-600" />
-                        Copied
-                      </>
-                    ) : (
-                      "Copy"
-                    )}
-                  </Button>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-amber-600">
-                  <AlertCircle className="h-4 w-4" />
-                  Store this key securely. It won't be shown again.
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
         {/* Algorithm Files */}
         <Card>
           <CardHeader>
@@ -306,7 +258,7 @@ export function DeveloperSection() {
                       onClick={() => handleCopyPath(`// Import recommendation service
 import { getRecommendations } from './services/recommendationService';
 
-// Get personalized recommendations
+// Get personalized recommendations (no API key required)
 const recommendations = await getRecommendations({
   userId: 'user-123',
   limit: 5,
@@ -329,7 +281,7 @@ console.log(recommendations);`, "Quick Start")}
                     <code>{`// Import recommendation service
 import { getRecommendations } from './services/recommendationService';
 
-// Get personalized recommendations
+// Get personalized recommendations (no API key required)
 const recommendations = await getRecommendations({
   userId: 'user-123',
   limit: 5,
@@ -346,15 +298,15 @@ console.log(recommendations);`}</code>
                   <div className="border rounded-lg p-4">
                     <h3 className="font-semibold mb-2 flex items-center gap-2">
                       GET /api/recommendations
-                      <Badge variant="outline">Active</Badge>
+                      <Badge variant="outline">Open Access</Badge>
                     </h3>
                     <p className="text-sm text-gray-600 mb-2">
-                      Fetch personalized recommendations for a user
+                      Fetch personalized recommendations for a user (no authentication required)
                     </p>
                     <Button 
                       variant="outline" 
                       size="sm"
-                      onClick={() => handleCopyPath('curl -X GET "https://api.recommendengine.com/v1/recommendations?userId=user-123&limit=5" -H "Authorization: Bearer YOUR_API_KEY"', "API Example")}
+                      onClick={() => handleCopyPath('curl -X GET "https://api.recommendengine.com/v1/recommendations?userId=user-123&limit=5" -H "Content-Type: application/json"', "API Example")}
                     >
                       {copiedItem === "API Example" ? "Copied!" : "Copy cURL"}
                     </Button>
