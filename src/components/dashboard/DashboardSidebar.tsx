@@ -10,11 +10,23 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar";
 import { Home, BarChart2, Users, FileText, Settings, Bell } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 
-export function DashboardSidebar({ children }: { children: React.ReactNode }) {
-  const [activeItem, setActiveItem] = useState("overview");
+interface DashboardSidebarProps {
+  children: React.ReactNode;
+  activeSection: string;
+  onSectionChange: (section: string) => void;
+}
+
+export function DashboardSidebar({ children, activeSection, onSectionChange }: DashboardSidebarProps) {
+  const menuItems = [
+    { id: "overview", title: "Overview", icon: Home },
+    { id: "analytics", title: "Analytics", icon: BarChart2 },
+    { id: "users", title: "Users", icon: Users },
+    { id: "content", title: "Content", icon: FileText },
+    { id: "notifications", title: "Notifications", icon: Bell },
+    { id: "settings", title: "Settings", icon: Settings },
+  ];
   
   return (
     <SidebarProvider>
@@ -30,66 +42,18 @@ export function DashboardSidebar({ children }: { children: React.ReactNode }) {
           </SidebarHeader>
           <SidebarContent>
             <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton 
-                  isActive={activeItem === "overview"}
-                  onClick={() => setActiveItem("overview")}
-                  tooltip="Overview"
-                >
-                  <Home className="mr-2" />
-                  <span>Overview</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton 
-                  isActive={activeItem === "analytics"}
-                  onClick={() => setActiveItem("analytics")}
-                  tooltip="Analytics"
-                >
-                  <BarChart2 className="mr-2" />
-                  <span>Analytics</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton 
-                  isActive={activeItem === "users"}
-                  onClick={() => setActiveItem("users")}
-                  tooltip="Users"
-                >
-                  <Users className="mr-2" />
-                  <span>Users</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton 
-                  isActive={activeItem === "content"}
-                  onClick={() => setActiveItem("content")}
-                  tooltip="Content"
-                >
-                  <FileText className="mr-2" />
-                  <span>Content</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton 
-                  isActive={activeItem === "notifications"}
-                  onClick={() => setActiveItem("notifications")}
-                  tooltip="Notifications"
-                >
-                  <Bell className="mr-2" />
-                  <span>Notifications</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton 
-                  isActive={activeItem === "settings"}
-                  onClick={() => setActiveItem("settings")}
-                  tooltip="Settings"
-                >
-                  <Settings className="mr-2" />
-                  <span>Settings</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+              {menuItems.map((item) => (
+                <SidebarMenuItem key={item.id}>
+                  <SidebarMenuButton 
+                    isActive={activeSection === item.id}
+                    onClick={() => onSectionChange(item.id)}
+                    tooltip={item.title}
+                  >
+                    <item.icon className="mr-2" />
+                    <span>{item.title}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarContent>
         </Sidebar>
