@@ -1,8 +1,8 @@
-
 import { RecommendationSection } from "@/components/recommendations/RecommendationSection";
 import { RecommendationFeed } from "@/components/recommendations/RecommendationFeed";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Zap, Users, Github, BookOpen, Code2, Heart, Star, GitFork } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
@@ -35,9 +35,11 @@ const Index = () => {
               <Github className="mr-2 h-5 w-5" />
               View on GitHub <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 backdrop-blur-sm bg-white/30 border-white/50 hover:bg-white/50">
-              <BookOpen className="mr-2 h-5 w-5" />
-              Documentation
+            <Button size="lg" variant="outline" className="text-lg px-8 backdrop-blur-sm bg-white/30 border-white/50 hover:bg-white/50" asChild>
+              <Link to="/documentation">
+                <BookOpen className="mr-2 h-5 w-5" />
+                Documentation
+              </Link>
             </Button>
           </div>
 
