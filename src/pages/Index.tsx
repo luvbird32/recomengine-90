@@ -106,7 +106,7 @@ const Index = () => {
             <p className="text-sm text-muted-foreground">Join thousands of developers building the future together</p>
           </div>
           <div className="p-6 backdrop-blur-md bg-white/30 border border-white/30 rounded-xl shadow-lg">
-            <BookOpen className="w-8 h-8 text-green-500 mb-4" />
+            <Code2 className="w-8 h-8 text-green-500 mb-4" />
             <h3 className="font-semibold mb-2">Rich Documentation</h3>
             <p className="text-sm text-muted-foreground">Comprehensive guides, examples, and API references</p>
           </div>
@@ -158,7 +158,7 @@ const Index = () => {
                 </Button>
               </div>
               <div className="p-6 backdrop-blur-md bg-white/30 border border-white/30 rounded-xl">
-                <BookOpen className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+                <Code2 className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                 <h3 className="font-semibold mb-2">Improve Docs</h3>
                 <p className="text-sm text-muted-foreground mb-4">Help others learn and contribute</p>
                 <Button variant="outline" size="sm" className="backdrop-blur-sm bg-white/20" asChild>
@@ -187,7 +187,7 @@ const Index = () => {
               </Button>
               <Button size="lg" variant="outline" className="backdrop-blur-sm bg-white/30 border-white/50 hover:bg-white/50" asChild>
                 <a href="https://github.com/luvbird32/recomengine-90.git/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">
-                  <BookOpen className="mr-2 h-5 w-5" />
+                  <Code2 className="mr-2 h-5 w-5" />
                   Read Contributing Guide
                 </a>
               </Button>
