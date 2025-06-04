@@ -1,10 +1,10 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Bell, Mail, AlertTriangle, Info, CheckCircle, Trash2, Settings } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { NotificationStats } from "@/components/notifications/NotificationStats";
+import { NotificationList } from "@/components/notifications/NotificationList";
 
 interface Notification {
   id: number;
@@ -26,19 +26,6 @@ const initialNotifications: Notification[] = [
 export function NotificationsSection() {
   const [notifications, setNotifications] = useState<Notification[]>(initialNotifications);
   const { toast } = useToast();
-
-  const getIcon = (type: string) => {
-    switch (type) {
-      case "alert":
-        return <AlertTriangle className="h-5 w-5 text-red-500" />;
-      case "warning":
-        return <AlertTriangle className="h-5 w-5 text-yellow-500" />;
-      case "success":
-        return <CheckCircle className="h-5 w-5 text-green-500" />;
-      default:
-        return <Info className="h-5 w-5 text-blue-500" />;
-    }
-  };
 
   const markAllAsRead = () => {
     setNotifications(prev => prev.map(notif => ({ ...notif, read: true })));
@@ -90,101 +77,18 @@ export function NotificationsSection() {
         </div>
       </div>
 
-      {/* Notification Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Total Notifications</CardTitle>
-            <Bell className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{notifications.length}</div>
-            <p className="text-xs text-muted-foreground">This week</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Unread</CardTitle>
-            <Bell className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{unreadCount}</div>
-            <p className="text-xs text-muted-foreground">Requires attention</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Alerts</CardTitle>
-            <AlertTriangle className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{alertCount}</div>
-            <p className="text-xs text-muted-foreground">Critical issues</p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Email Sent</CardTitle>
-            <Mail className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">856</div>
-            <p className="text-xs text-muted-foreground">This month</p>
-          </CardContent>
-        </Card>
-      </div>
+      <NotificationStats 
+        totalNotifications={notifications.length}
+        unreadCount={unreadCount}
+        alertCount={alertCount}
+        emailsSent={856}
+      />
 
-      {/* Notifications List */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Notifications</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {notifications.map((notification) => (
-              <div 
-                key={notification.id} 
-                className={`flex items-start gap-3 p-4 rounded-lg border ${notification.read ? 'bg-muted/30' : 'bg-background'} hover:bg-muted/50 transition-colors`}
-              >
-                {getIcon(notification.type)}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-medium">{notification.title}</h4>
-                    <div className="flex items-center gap-2">
-                      {!notification.read && (
-                        <Badge variant="default" className="text-xs">New</Badge>
-                      )}
-                      <span className="text-xs text-muted-foreground">{notification.time}</span>
-                      <div className="flex gap-1">
-                        {!notification.read && (
-                          <Button 
-                            variant="ghost" 
-                            size="sm"
-                            onClick={() => markAsRead(notification.id)}
-                          >
-                            <CheckCircle className="h-4 w-4" />
-                          </Button>
-                        )}
-                        <Button 
-                          variant="ghost" 
-                          size="sm"
-                          onClick={() => deleteNotification(notification.id)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-1">{notification.message}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <NotificationList 
+        notifications={notifications}
+        onMarkAsRead={markAsRead}
+        onDelete={deleteNotification}
+      />
     </div>
   );
 }
