@@ -3,6 +3,7 @@ import { useState } from "react";
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
 import { OverviewSection } from "@/components/dashboard/sections/OverviewSection";
 import { AlgorithmExplanationSection } from "@/components/dashboard/sections/AlgorithmExplanationSection";
+import { IndustriesSection } from "@/components/dashboard/sections/IndustriesSection";
 import { AnalyticsSection } from "@/components/dashboard/sections/AnalyticsSection";
 import { UsersSection } from "@/components/dashboard/sections/UsersSection";
 import { ContentSection } from "@/components/dashboard/sections/ContentSection";
@@ -18,6 +19,8 @@ const Dashboard = () => {
         return <OverviewSection />;
       case "algorithms":
         return <AlgorithmExplanationSection />;
+      case "industries":
+        return <IndustriesSection />;
       case "analytics":
         return <AnalyticsSection />;
       case "users":

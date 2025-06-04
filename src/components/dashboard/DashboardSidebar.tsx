@@ -9,7 +9,7 @@ import {
   SidebarProvider,
   SidebarInset,
 } from "@/components/ui/sidebar";
-import { Home, BarChart2, Users, FileText, Settings, Bell } from "lucide-react";
+import { Home, BarChart2, Users, FileText, Settings, Bell, Building2 } from "lucide-react";
 import { useState } from "react";
 
 interface DashboardSidebarProps {
@@ -21,6 +21,8 @@ interface DashboardSidebarProps {
 export function DashboardSidebar({ children, activeSection, onSectionChange }: DashboardSidebarProps) {
   const menuItems = [
     { id: "overview", title: "Overview", icon: Home },
+    { id: "algorithms", title: "Algorithms", icon: BarChart2 },
+    { id: "industries", title: "Industries", icon: Building2 },
     { id: "analytics", title: "Analytics", icon: BarChart2 },
     { id: "users", title: "Users", icon: Users },
     { id: "content", title: "Content", icon: FileText },
