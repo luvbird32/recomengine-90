@@ -1,15 +1,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { UserActions } from "./UserActions";
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  status: 'Active' | 'Inactive' | 'Pending' | 'Banned';
-  joinDate: string;
-  engagement: 'High' | 'Medium' | 'Low';
-}
+import { User } from "./types";
 
 interface UserTableProps {
   users: User[];

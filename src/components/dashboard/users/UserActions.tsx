@@ -8,15 +8,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  status: 'Active' | 'Inactive' | 'Pending' | 'Banned';
-  joinDate: string;
-  engagement: 'High' | 'Medium' | 'Low';
-}
+import { User } from "./types";
 
 interface UserActionsProps {
   user: User;
