@@ -1,5 +1,5 @@
 
-import { IndustryShowcase } from "../IndustryShowcase";
+import { IndustryShowcase } from "./IndustryShowcase";
 
 export function IndustriesSection() {
   return (
