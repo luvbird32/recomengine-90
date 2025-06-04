@@ -36,11 +36,24 @@ const Navigation = () => {
                 <LayoutDashboard className="w-4 h-4 mr-1" />
                 Dashboard
               </Link>
+              <Link 
+                to="/documentation" 
+                className={`transition-colors ${
+                  location.pathname === '/documentation' 
+                    ? 'text-purple-600 font-medium' 
+                    : 'text-gray-600 hover:text-purple-600'
+                }`}
+              >
+                Documentation
+              </Link>
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="ghost" className="hidden md:inline-flex">Documentation</Button>
-            <Button className="bg-purple-600 hover:bg-purple-700">Get Started</Button>
+            <Button asChild className="bg-purple-600 hover:bg-purple-700">
+              <a href="https://github.com/luvbird32/recomengine-90.git" target="_blank" rel="noopener noreferrer">
+                Get Started
+              </a>
+            </Button>
           </div>
         </div>
       </div>
