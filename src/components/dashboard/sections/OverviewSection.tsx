@@ -1,9 +1,13 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
-import { Brain, FileText, Shield, Upload } from "lucide-react";
+import { Brain, FileText, Shield, Upload, Download } from "lucide-react";
 import { StatisticsOverview } from "@/components/dashboard/StatisticsOverview";
 import { LocationAnalytics } from "@/components/analytics/LocationAnalytics";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const mockUserGrowthData = [
   { name: 'Jan', users: 1200, activeUsers: 800 },
@@ -21,6 +25,84 @@ const mockAccuracyData = [
 ];
 
 export function OverviewSection() {
+  const [timePeriod, setTimePeriod] = useState("last30days");
+  const [systemStatuses, setSystemStatuses] = useState({
+    apiServices: { status: 'operational', label: 'API Services' },
+    recommendationEngine: { status: 'operational', label: 'Recommendation Engine' },
+    contentDelivery: { status: 'degraded', label: 'Content Delivery' },
+    database: { status: 'operational', label: 'Database' },
+    analyticsPipeline: { status: 'operational', label: 'Analytics Pipeline' }
+  });
+  const { toast } = useToast();
+
+  const handleExportData = () => {
+    // Simulate data export
+    const dataToExport = {
+      userGrowth: mockUserGrowthData,
+      accuracy: mockAccuracyData,
+      timePeriod,
+      exportDate: new Date().toISOString()
+    };
+    
+    const dataStr = JSON.stringify(dataToExport, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = `analytics-data-${timePeriod}.json`;
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+    
+    toast({
+      title: "Data Exported",
+      description: `Analytics data for ${timePeriod} has been downloaded.`,
+    });
+  };
+
+  const refreshSystemStatus = () => {
+    // Simulate system status refresh
+    setSystemStatuses(prev => ({
+      ...prev,
+      contentDelivery: { 
+        ...prev.contentDelivery, 
+        status: Math.random() > 0.5 ? 'operational' : 'degraded' 
+      }
+    }));
+    
+    toast({
+      title: "System Status Refreshed",
+      description: "Latest system status has been fetched.",
+    });
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'operational': return 'bg-green-500';
+      case 'degraded': return 'bg-amber-500';
+      case 'outage': return 'bg-red-500';
+      default: return 'bg-gray-500';
+    }
+  };
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'operational': return 'Operational';
+      case 'degraded': return 'Degraded';
+      case 'outage': return 'Outage';
+      default: return 'Unknown';
+    }
+  };
+
+  const getStatusTextColor = (status: string) => {
+    switch (status) {
+      case 'operational': return 'text-green-500';
+      case 'degraded': return 'text-amber-500';
+      case 'outage': return 'text-red-500';
+      default: return 'text-gray-500';
+    }
+  };
+
   return (
     <div className="container p-6 mx-auto max-w-7xl">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
@@ -29,15 +111,21 @@ export function OverviewSection() {
           <p className="text-muted-foreground">Monitor your recommendation engine performance</p>
         </div>
         <div className="flex items-center space-x-2">
-          <select className="bg-background border rounded-md px-3 py-1 text-sm">
-            <option>Last 30 days</option>
-            <option>Last 7 days</option>
-            <option>Last 24 hours</option>
-            <option>All time</option>
-          </select>
-          <button className="bg-primary text-primary-foreground rounded-md px-3 py-1 text-sm hover:bg-primary/90 transition-colors">
+          <Select value={timePeriod} onValueChange={setTimePeriod}>
+            <SelectTrigger className="w-[150px]">
+              <SelectValue placeholder="Select period" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="last24hours">Last 24 hours</SelectItem>
+              <SelectItem value="last7days">Last 7 days</SelectItem>
+              <SelectItem value="last30days">Last 30 days</SelectItem>
+              <SelectItem value="alltime">All time</SelectItem>
+            </SelectContent>
+          </Select>
+          <Button onClick={handleExportData} className="bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+            <Download className="w-4 h-4 mr-2" />
             Export Data
-          </button>
+          </Button>
         </div>
       </div>
       
@@ -51,7 +139,7 @@ export function OverviewSection() {
         {/* Key Metrics - First Row */}
         <Card className="col-span-full lg:col-span-2">
           <CardHeader>
-            <CardTitle>User Growth Trends</CardTitle>
+            <CardTitle>User Growth Trends ({timePeriod})</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
@@ -132,46 +220,25 @@ export function OverviewSection() {
         </Card>
 
         <Card className="col-span-full lg:col-span-1">
-          <CardHeader>
+          <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>System Status</CardTitle>
+            <Button variant="ghost" size="sm" onClick={refreshSystemStatus}>
+              Refresh
+            </Button>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 gap-4">
-              <div className="flex items-center justify-between border-b pb-2">
-                <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                  <span>API Services</span>
+              {Object.entries(systemStatuses).map(([key, service]) => (
+                <div key={key} className="flex items-center justify-between border-b pb-2">
+                  <div className="flex items-center gap-2">
+                    <div className={`h-3 w-3 rounded-full ${getStatusColor(service.status)}`}></div>
+                    <span>{service.label}</span>
+                  </div>
+                  <span className={`text-sm font-medium ${getStatusTextColor(service.status)}`}>
+                    {getStatusText(service.status)}
+                  </span>
                 </div>
-                <span className="text-green-500 text-sm font-medium">Operational</span>
-              </div>
-              <div className="flex items-center justify-between border-b pb-2">
-                <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                  <span>Recommendation Engine</span>
-                </div>
-                <span className="text-green-500 text-sm font-medium">Operational</span>
-              </div>
-              <div className="flex items-center justify-between border-b pb-2">
-                <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-amber-500"></div>
-                  <span>Content Delivery</span>
-                </div>
-                <span className="text-amber-500 text-sm font-medium">Degraded</span>
-              </div>
-              <div className="flex items-center justify-between border-b pb-2">
-                <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                  <span>Database</span>
-                </div>
-                <span className="text-green-500 text-sm font-medium">Operational</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                  <span>Analytics Pipeline</span>
-                </div>
-                <span className="text-green-500 text-sm font-medium">Operational</span>
-              </div>
+              ))}
             </div>
           </CardContent>
         </Card>

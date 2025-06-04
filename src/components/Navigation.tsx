@@ -1,9 +1,11 @@
 
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { LayoutDashboard } from "lucide-react";
 
 const Navigation = () => {
+  const location = useLocation();
+
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="container mx-auto px-4">
@@ -13,10 +15,24 @@ const Navigation = () => {
               RecommendEngine
             </Link>
             <div className="ml-8 space-x-4 hidden md:flex">
-              <Link to="/" className="text-gray-600 hover:text-purple-600 transition-colors">
+              <Link 
+                to="/" 
+                className={`transition-colors ${
+                  location.pathname === '/' 
+                    ? 'text-purple-600 font-medium' 
+                    : 'text-gray-600 hover:text-purple-600'
+                }`}
+              >
                 Home
               </Link>
-              <Link to="/dashboard" className="flex items-center text-gray-600 hover:text-purple-600 transition-colors">
+              <Link 
+                to="/dashboard" 
+                className={`flex items-center transition-colors ${
+                  location.pathname === '/dashboard' 
+                    ? 'text-purple-600 font-medium' 
+                    : 'text-gray-600 hover:text-purple-600'
+                }`}
+              >
                 <LayoutDashboard className="w-4 h-4 mr-1" />
                 Dashboard
               </Link>

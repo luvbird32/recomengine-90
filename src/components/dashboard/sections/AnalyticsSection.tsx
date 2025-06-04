@@ -1,8 +1,13 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { EngagementMetrics } from "@/components/analytics/EngagementMetrics";
 import { LocationAnalytics } from "@/components/analytics/LocationAnalytics";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { RefreshCw } from 'lucide-react';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 const mockEngagementData = [
   { name: 'Jan', clicks: 400, views: 2400, conversions: 240 },
@@ -20,17 +25,58 @@ const mockCategoryData = [
 ];
 
 export function AnalyticsSection() {
+  const [dateRange, setDateRange] = useState('last30days');
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const { toast } = useToast();
+
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    // Simulate data refresh
+    setTimeout(() => {
+      setIsRefreshing(false);
+      toast({
+        title: "Data Refreshed",
+        description: "Analytics data has been updated with the latest information.",
+      });
+    }, 1500);
+  };
+
   return (
     <div className="container p-6 mx-auto max-w-7xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Advanced Analytics</h1>
-        <p className="text-muted-foreground">Deep dive into your recommendation performance metrics</p>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+        <div>
+          <h1 className="text-3xl font-bold">Advanced Analytics</h1>
+          <p className="text-muted-foreground">Deep dive into your recommendation performance metrics</p>
+        </div>
+        
+        <div className="flex items-center gap-2">
+          <Select value={dateRange} onValueChange={setDateRange}>
+            <SelectTrigger className="w-[150px]">
+              <SelectValue placeholder="Select range" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="last7days">Last 7 days</SelectItem>
+              <SelectItem value="last30days">Last 30 days</SelectItem>
+              <SelectItem value="last90days">Last 90 days</SelectItem>
+              <SelectItem value="last12months">Last 12 months</SelectItem>
+            </SelectContent>
+          </Select>
+          
+          <Button 
+            variant="outline" 
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+            {isRefreshing ? 'Refreshing...' : 'Refresh'}
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <Card>
           <CardHeader>
-            <CardTitle>Engagement Trends</CardTitle>
+            <CardTitle>Engagement Trends ({dateRange})</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
