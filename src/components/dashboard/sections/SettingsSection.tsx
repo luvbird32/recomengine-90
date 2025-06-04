@@ -6,7 +6,6 @@ import { DatabaseSettings } from "../settings/DatabaseSettings";
 import { NotificationSettings } from "../settings/NotificationSettings";
 import { SettingsActions } from "../settings/SettingsActions";
 import { SettingsHeader } from "../settings/SettingsHeader";
-import { DeveloperSection } from "../settings/DeveloperSection";
 import { useSettings } from "../settings/useSettings";
 
 export function SettingsSection() {
@@ -25,12 +24,11 @@ export function SettingsSection() {
       <SettingsHeader hasChanges={hasChanges} />
 
       <Tabs defaultValue="general" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="security">Security</TabsTrigger>
           <TabsTrigger value="database">Database</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
-          <TabsTrigger value="developer">Developer</TabsTrigger>
         </TabsList>
 
         <TabsContent value="general" className="mt-6">
@@ -89,10 +87,6 @@ export function SettingsSection() {
               onInputChange={handleInputChange}
             />
           </div>
-        </TabsContent>
-
-        <TabsContent value="developer" className="mt-6">
-          <DeveloperSection />
         </TabsContent>
       </Tabs>
 
