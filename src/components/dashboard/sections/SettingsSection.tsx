@@ -1,13 +1,11 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
-import { Settings, Shield, Database, Bell, RotateCcw, Save } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { GeneralSettings } from "../settings/GeneralSettings";
+import { SecuritySettings } from "../settings/SecuritySettings";
+import { DatabaseSettings } from "../settings/DatabaseSettings";
+import { NotificationSettings } from "../settings/NotificationSettings";
+import { SettingsActions } from "../settings/SettingsActions";
 
 interface SettingsData {
   appName: string;
@@ -94,223 +92,53 @@ export function SettingsSection() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* General Settings */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Settings className="h-5 w-5" />
-              General Settings
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="app-name">Application Name</Label>
-              <Input 
-                id="app-name" 
-                value={settings.appName}
-                onChange={(e) => handleInputChange('appName', e.target.value)}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="app-description">Description</Label>
-              <Input 
-                id="app-description" 
-                value={settings.appDescription}
-                onChange={(e) => handleInputChange('appDescription', e.target.value)}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="api-url">API Base URL</Label>
-              <Input 
-                id="api-url" 
-                value={settings.apiUrl}
-                onChange={(e) => handleInputChange('apiUrl', e.target.value)}
-              />
-            </div>
-            <Separator />
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>Maintenance Mode</Label>
-                <p className="text-sm text-muted-foreground">Enable maintenance mode for system updates</p>
-              </div>
-              <Switch 
-                checked={settings.maintenanceMode}
-                onCheckedChange={(checked) => handleInputChange('maintenanceMode', checked)}
-              />
-            </div>
-          </CardContent>
-        </Card>
+        <GeneralSettings 
+          settings={{
+            appName: settings.appName,
+            appDescription: settings.appDescription,
+            apiUrl: settings.apiUrl,
+            maintenanceMode: settings.maintenanceMode,
+          }}
+          onInputChange={handleInputChange}
+        />
 
-        {/* Security Settings */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Shield className="h-5 w-5" />
-              Security Settings
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="api-key">API Key</Label>
-              <div className="flex gap-2">
-                <Input 
-                  id="api-key" 
-                  type="password" 
-                  value={settings.apiKey}
-                  onChange={(e) => handleInputChange('apiKey', e.target.value)}
-                />
-                <Button variant="outline" onClick={generateApiKey}>Regenerate</Button>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="webhook-secret">Webhook Secret</Label>
-              <Input 
-                id="webhook-secret" 
-                type="password" 
-                value={settings.webhookSecret}
-                onChange={(e) => handleInputChange('webhookSecret', e.target.value)}
-              />
-            </div>
-            <Separator />
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>Two-Factor Authentication</Label>
-                <p className="text-sm text-muted-foreground">Add an extra layer of security</p>
-              </div>
-              <Switch 
-                checked={settings.twoFactorAuth}
-                onCheckedChange={(checked) => handleInputChange('twoFactorAuth', checked)}
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>IP Whitelist</Label>
-                <p className="text-sm text-muted-foreground">Restrict API access to specific IPs</p>
-              </div>
-              <Switch 
-                checked={settings.ipWhitelist}
-                onCheckedChange={(checked) => handleInputChange('ipWhitelist', checked)}
-              />
-            </div>
-          </CardContent>
-        </Card>
+        <SecuritySettings 
+          settings={{
+            apiKey: settings.apiKey,
+            webhookSecret: settings.webhookSecret,
+            twoFactorAuth: settings.twoFactorAuth,
+            ipWhitelist: settings.ipWhitelist,
+          }}
+          onInputChange={handleInputChange}
+          onGenerateApiKey={generateApiKey}
+        />
 
-        {/* Database Settings */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Database className="h-5 w-5" />
-              Database Settings
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="db-host">Database Host</Label>
-              <Input 
-                id="db-host" 
-                value={settings.dbHost}
-                onChange={(e) => handleInputChange('dbHost', e.target.value)}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="db-name">Database Name</Label>
-              <Input 
-                id="db-name" 
-                value={settings.dbName}
-                onChange={(e) => handleInputChange('dbName', e.target.value)}
-              />
-            </div>
-            <Separator />
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>Auto Backup</Label>
-                <p className="text-sm text-muted-foreground">Automatically backup data daily</p>
-              </div>
-              <Switch 
-                checked={settings.autoBackup}
-                onCheckedChange={(checked) => handleInputChange('autoBackup', checked)}
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>Data Retention</Label>
-                <p className="text-sm text-muted-foreground">Keep logs for 30 days</p>
-              </div>
-              <Switch 
-                checked={settings.dataRetention}
-                onCheckedChange={(checked) => handleInputChange('dataRetention', checked)}
-              />
-            </div>
-          </CardContent>
-        </Card>
+        <DatabaseSettings 
+          settings={{
+            dbHost: settings.dbHost,
+            dbName: settings.dbName,
+            autoBackup: settings.autoBackup,
+            dataRetention: settings.dataRetention,
+          }}
+          onInputChange={handleInputChange}
+        />
 
-        {/* Notification Settings */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Bell className="h-5 w-5" />
-              Notification Settings
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email-notifications">Email for Notifications</Label>
-              <Input 
-                id="email-notifications" 
-                type="email" 
-                value={settings.emailNotifications}
-                onChange={(e) => handleInputChange('emailNotifications', e.target.value)}
-              />
-            </div>
-            <Separator />
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>Email Alerts</Label>
-                <p className="text-sm text-muted-foreground">Receive email notifications for critical events</p>
-              </div>
-              <Switch 
-                checked={settings.emailAlerts}
-                onCheckedChange={(checked) => handleInputChange('emailAlerts', checked)}
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>System Health Reports</Label>
-                <p className="text-sm text-muted-foreground">Weekly system performance reports</p>
-              </div>
-              <Switch 
-                checked={settings.systemHealthReports}
-                onCheckedChange={(checked) => handleInputChange('systemHealthReports', checked)}
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>User Activity Alerts</Label>
-                <p className="text-sm text-muted-foreground">Notifications for unusual user activity</p>
-              </div>
-              <Switch 
-                checked={settings.userActivityAlerts}
-                onCheckedChange={(checked) => handleInputChange('userActivityAlerts', checked)}
-              />
-            </div>
-          </CardContent>
-        </Card>
+        <NotificationSettings 
+          settings={{
+            emailNotifications: settings.emailNotifications,
+            emailAlerts: settings.emailAlerts,
+            systemHealthReports: settings.systemHealthReports,
+            userActivityAlerts: settings.userActivityAlerts,
+          }}
+          onInputChange={handleInputChange}
+        />
       </div>
 
-      <div className="mt-8 flex justify-end gap-4">
-        <Button variant="outline" onClick={resetToDefaults}>
-          <RotateCcw className="h-4 w-4 mr-2" />
-          Reset to Defaults
-        </Button>
-        <Button 
-          onClick={saveSettings}
-          disabled={!hasChanges}
-          className={hasChanges ? "bg-green-600 hover:bg-green-700" : ""}
-        >
-          <Save className="h-4 w-4 mr-2" />
-          Save Changes
-        </Button>
-      </div>
+      <SettingsActions 
+        hasChanges={hasChanges}
+        onSave={saveSettings}
+        onReset={resetToDefaults}
+      />
     </div>
   );
 }
