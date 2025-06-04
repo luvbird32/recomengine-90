@@ -1,14 +1,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-
-interface Algorithm {
-  name: string;
-  explanation: string;
-  useCase: string;
-  example: string;
-  code: string;
-}
+import { Algorithm } from "./algorithmData";
 
 interface AlgorithmCardProps {
   algorithm: Algorithm;

@@ -1,7 +1,25 @@
 
 import { Users, Brain, GitBranch, Zap, Target, Shuffle } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
-export const algorithmCategories = [
+export interface Algorithm {
+  name: string;
+  explanation: string;
+  useCase: string;
+  example: string;
+  code: string;
+}
+
+export interface AlgorithmCategory {
+  id: string;
+  name: string;
+  icon: LucideIcon;
+  description: string;
+  color: string;
+  algorithms: Algorithm[];
+}
+
+export const algorithmCategories: AlgorithmCategory[] = [
   {
     id: "user-behavior",
     name: "User Behavior Based",
