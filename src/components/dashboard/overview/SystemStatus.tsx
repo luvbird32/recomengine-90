@@ -12,9 +12,10 @@ interface SystemService {
 interface SystemStatusProps {
   systemStatuses: Record<string, SystemService>;
   onRefresh: () => void;
+  isRefreshing?: boolean;
 }
 
-export function SystemStatus({ systemStatuses, onRefresh }: SystemStatusProps) {
+export function SystemStatus({ systemStatuses, onRefresh, isRefreshing }: SystemStatusProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'operational': return 'bg-green-500';
@@ -46,8 +47,8 @@ export function SystemStatus({ systemStatuses, onRefresh }: SystemStatusProps) {
     <Card className="col-span-full lg:col-span-1">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>System Status</CardTitle>
-        <Button variant="ghost" size="sm" onClick={onRefresh}>
-          Refresh
+        <Button variant="ghost" size="sm" onClick={onRefresh} disabled={isRefreshing}>
+          {isRefreshing ? 'Refreshing...' : 'Refresh'}
         </Button>
       </CardHeader>
       <CardContent className="space-y-4">
