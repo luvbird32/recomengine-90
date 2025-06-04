@@ -36,16 +36,6 @@ const Navigation = () => {
                 <LayoutDashboard className="w-4 h-4 mr-1" />
                 Dashboard
               </Link>
-              <Link 
-                to="/documentation" 
-                className={`transition-colors ${
-                  location.pathname === '/documentation' 
-                    ? 'text-purple-600 font-medium' 
-                    : 'text-gray-600 hover:text-purple-600'
-                }`}
-              >
-                Documentation
-              </Link>
             </div>
           </div>
           <div className="flex items-center gap-4">

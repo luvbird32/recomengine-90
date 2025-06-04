@@ -1,7 +1,7 @@
 import { RecommendationSection } from "@/components/recommendations/RecommendationSection";
 import { RecommendationFeed } from "@/components/recommendations/RecommendationFeed";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Zap, Users, Github, BookOpen, Code2, Heart, Star, GitFork } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Users, Github, Code2, Heart, Star, GitFork } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -38,9 +38,9 @@ const Index = () => {
               </a>
             </Button>
             <Button size="lg" variant="outline" className="text-lg px-8 backdrop-blur-sm bg-white/30 border-white/50 hover:bg-white/50" asChild>
-              <Link to="/documentation">
-                <BookOpen className="mr-2 h-5 w-5" />
-                Documentation
+              <Link to="/dashboard">
+                <Sparkles className="mr-2 h-5 w-5" />
+                View Dashboard
               </Link>
             </Button>
           </div>
@@ -68,9 +68,9 @@ const Index = () => {
               <p className="text-muted-foreground">Complete local deployment with no external dependencies</p>
             </div>
             <div className="p-6 rounded-xl backdrop-blur-md bg-white/30 border border-white/30 shadow-lg hover:shadow-xl transition-all">
-              <BookOpen className="w-8 h-8 text-blue-600 mx-auto mb-3" />
-              <h3 className="font-semibold mb-2">Rich Documentation</h3>
-              <p className="text-muted-foreground">Comprehensive guides, API docs, and community resources</p>
+              <Github className="w-8 h-8 text-gray-800 mx-auto mb-3" />
+              <h3 className="font-semibold mb-2">Open Source</h3>
+              <p className="text-muted-foreground">Complete transparency with full source code access</p>
             </div>
             <div className="p-6 rounded-xl backdrop-blur-md bg-white/30 border border-white/30 shadow-lg hover:shadow-xl transition-all">
               <Heart className="w-8 h-8 text-red-500 mx-auto mb-3" />

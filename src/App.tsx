@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
-import Documentation from "./pages/Documentation";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +20,6 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/documentation" element={<Documentation />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
