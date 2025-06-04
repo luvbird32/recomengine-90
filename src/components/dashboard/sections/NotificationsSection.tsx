@@ -2,9 +2,20 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Bell, Mail, AlertTriangle, Info, CheckCircle } from "lucide-react";
+import { Bell, Mail, AlertTriangle, Info, CheckCircle, Trash2, Settings } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
-const mockNotifications = [
+interface Notification {
+  id: number;
+  type: "alert" | "warning" | "success" | "info";
+  title: string;
+  message: string;
+  time: string;
+  read: boolean;
+}
+
+const initialNotifications: Notification[] = [
   { id: 1, type: "alert", title: "System Alert", message: "High memory usage detected on server", time: "2 minutes ago", read: false },
   { id: 2, type: "info", title: "New User Registration", message: "25 new users registered today", time: "1 hour ago", read: false },
   { id: 3, type: "success", title: "Backup Completed", message: "Daily backup completed successfully", time: "3 hours ago", read: true },
@@ -13,6 +24,9 @@ const mockNotifications = [
 ];
 
 export function NotificationsSection() {
+  const [notifications, setNotifications] = useState<Notification[]>(initialNotifications);
+  const { toast } = useToast();
+
   const getIcon = (type: string) => {
     switch (type) {
       case "alert":
@@ -26,6 +40,38 @@ export function NotificationsSection() {
     }
   };
 
+  const markAllAsRead = () => {
+    setNotifications(prev => prev.map(notif => ({ ...notif, read: true })));
+    toast({
+      title: "Notifications Updated",
+      description: "All notifications marked as read.",
+    });
+  };
+
+  const markAsRead = (id: number) => {
+    setNotifications(prev => prev.map(notif => 
+      notif.id === id ? { ...notif, read: true } : notif
+    ));
+  };
+
+  const deleteNotification = (id: number) => {
+    setNotifications(prev => prev.filter(notif => notif.id !== id));
+    toast({
+      title: "Notification Deleted",
+      description: "Notification has been removed.",
+    });
+  };
+
+  const openEmailSettings = () => {
+    toast({
+      title: "Email Settings",
+      description: "Email settings panel would open here.",
+    });
+  };
+
+  const unreadCount = notifications.filter(n => !n.read).length;
+  const alertCount = notifications.filter(n => n.type === "alert" && !n.read).length;
+
   return (
     <div className="container p-6 mx-auto max-w-7xl">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
@@ -34,11 +80,13 @@ export function NotificationsSection() {
           <p className="text-muted-foreground">Stay updated with system alerts and messages</p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline">
+          <Button variant="outline" onClick={openEmailSettings}>
             <Mail className="h-4 w-4 mr-2" />
             Email Settings
           </Button>
-          <Button>Mark All Read</Button>
+          <Button onClick={markAllAsRead} disabled={unreadCount === 0}>
+            Mark All Read
+          </Button>
         </div>
       </div>
 
@@ -50,7 +98,7 @@ export function NotificationsSection() {
             <Bell className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">127</div>
+            <div className="text-2xl font-bold">{notifications.length}</div>
             <p className="text-xs text-muted-foreground">This week</p>
           </CardContent>
         </Card>
@@ -61,7 +109,7 @@ export function NotificationsSection() {
             <Bell className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">23</div>
+            <div className="text-2xl font-bold">{unreadCount}</div>
             <p className="text-xs text-muted-foreground">Requires attention</p>
           </CardContent>
         </Card>
@@ -72,7 +120,7 @@ export function NotificationsSection() {
             <AlertTriangle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">5</div>
+            <div className="text-2xl font-bold">{alertCount}</div>
             <p className="text-xs text-muted-foreground">Critical issues</p>
           </CardContent>
         </Card>
@@ -96,10 +144,10 @@ export function NotificationsSection() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {mockNotifications.map((notification) => (
+            {notifications.map((notification) => (
               <div 
                 key={notification.id} 
-                className={`flex items-start gap-3 p-4 rounded-lg border ${notification.read ? 'bg-muted/30' : 'bg-background'}`}
+                className={`flex items-start gap-3 p-4 rounded-lg border ${notification.read ? 'bg-muted/30' : 'bg-background'} hover:bg-muted/50 transition-colors`}
               >
                 {getIcon(notification.type)}
                 <div className="flex-1 min-w-0">
@@ -110,6 +158,24 @@ export function NotificationsSection() {
                         <Badge variant="default" className="text-xs">New</Badge>
                       )}
                       <span className="text-xs text-muted-foreground">{notification.time}</span>
+                      <div className="flex gap-1">
+                        {!notification.read && (
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => markAsRead(notification.id)}
+                          >
+                            <CheckCircle className="h-4 w-4" />
+                          </Button>
+                        )}
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => deleteNotification(notification.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
                   </div>
                   <p className="text-sm text-muted-foreground mt-1">{notification.message}</p>

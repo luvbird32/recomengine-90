@@ -1,9 +1,12 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { FileText, Edit2, Trash2, Shield, Check, X } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { FileText, Edit2, Trash2, Check, X, Plus } from "lucide-react";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface ContentItem {
   id: string;
@@ -34,17 +37,66 @@ const mockContent: ContentItem[] = [
     category: 'Guide',
     status: 'published',
     lastModified: '2024-02-18'
+  },
+  {
+    id: '4',
+    title: 'User Analytics Dashboard',
+    category: 'Tutorial',
+    status: 'pending',
+    lastModified: '2024-02-17'
   }
 ];
 
 export function ContentManagement() {
+  const [content, setContent] = useState<ContentItem[]>(mockContent);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const { toast } = useToast();
 
-  const filteredContent = mockContent.filter(item => 
+  const filteredContent = content.filter(item => 
     item.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (selectedCategory === 'all' || item.category === selectedCategory)
   );
+
+  const categories = ['all', ...Array.from(new Set(content.map(item => item.category)))];
+
+  const handleStatusChange = (id: string, newStatus: 'published' | 'rejected') => {
+    setContent(prev => prev.map(item => 
+      item.id === id 
+        ? { ...item, status: newStatus, lastModified: new Date().toISOString().split('T')[0] }
+        : item
+    ));
+    
+    toast({
+      title: "Status Updated",
+      description: `Content ${newStatus === 'published' ? 'approved' : 'rejected'} successfully.`,
+    });
+  };
+
+  const handleDelete = (id: string) => {
+    setContent(prev => prev.filter(item => item.id !== id));
+    toast({
+      title: "Content Deleted",
+      description: "Content item has been removed.",
+      variant: "destructive",
+    });
+  };
+
+  const handleNewContent = () => {
+    const newItem: ContentItem = {
+      id: Date.now().toString(),
+      title: 'New Content Item',
+      category: 'Draft',
+      status: 'pending',
+      lastModified: new Date().toISOString().split('T')[0]
+    };
+    
+    setContent(prev => [newItem, ...prev]);
+    toast({
+      title: "Content Created",
+      description: "New content item added to the queue.",
+    });
+  };
 
   return (
     <Card>
@@ -60,8 +112,20 @@ export function ContentManagement() {
               onChange={(e) => setSearchTerm(e.target.value)}
               className="flex-1"
             />
-            <Button className="bg-purple-600 hover:bg-purple-700">
-              <FileText className="mr-2 h-4 w-4" />
+            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category === 'all' ? 'All Categories' : category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button onClick={handleNewContent} className="bg-purple-600 hover:bg-purple-700">
+              <Plus className="mr-2 h-4 w-4" />
               New Content
             </Button>
           </div>
@@ -98,15 +162,30 @@ export function ContentManagement() {
                       </Button>
                       {item.status === 'pending' && (
                         <>
-                          <Button variant="ghost" size="sm" className="text-green-600">
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="text-green-600"
+                            onClick={() => handleStatusChange(item.id, 'published')}
+                          >
                             <Check className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="sm" className="text-red-600">
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="text-red-600"
+                            onClick={() => handleStatusChange(item.id, 'rejected')}
+                          >
                             <X className="h-4 w-4" />
                           </Button>
                         </>
                       )}
-                      <Button variant="ghost" size="sm" className="text-red-600">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-red-600"
+                        onClick={() => handleDelete(item.id)}
+                      >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>

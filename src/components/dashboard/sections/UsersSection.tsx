@@ -3,17 +3,90 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Users, Search, Filter, MoreHorizontal, UserPlus } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Users, Search, Filter, MoreHorizontal, UserPlus, Mail, Ban, Shield } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
-const mockUsers = [
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  status: 'Active' | 'Inactive' | 'Pending' | 'Banned';
+  joinDate: string;
+  engagement: 'High' | 'Medium' | 'Low';
+}
+
+const mockUsers: User[] = [
   { id: 1, name: "Alice Johnson", email: "alice@example.com", status: "Active", joinDate: "2024-01-15", engagement: "High" },
   { id: 2, name: "Bob Smith", email: "bob@example.com", status: "Active", joinDate: "2024-02-20", engagement: "Medium" },
   { id: 3, name: "Carol Davis", email: "carol@example.com", status: "Inactive", joinDate: "2024-01-10", engagement: "Low" },
   { id: 4, name: "David Wilson", email: "david@example.com", status: "Active", joinDate: "2024-03-05", engagement: "High" },
   { id: 5, name: "Eva Martinez", email: "eva@example.com", status: "Pending", joinDate: "2024-03-20", engagement: "Medium" },
+  { id: 6, name: "Frank Brown", email: "frank@example.com", status: "Banned", joinDate: "2024-01-08", engagement: "Low" },
 ];
 
 export function UsersSection() {
+  const [users, setUsers] = useState<User[]>(mockUsers);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [engagementFilter, setEngagementFilter] = useState('all');
+  const { toast } = useToast();
+
+  const filteredUsers = users.filter(user => {
+    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         user.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || user.status === statusFilter;
+    const matchesEngagement = engagementFilter === 'all' || user.engagement === engagementFilter;
+    
+    return matchesSearch && matchesStatus && matchesEngagement;
+  });
+
+  const handleStatusChange = (userId: number, newStatus: User['status']) => {
+    setUsers(prev => prev.map(user => 
+      user.id === userId ? { ...user, status: newStatus } : user
+    ));
+    
+    toast({
+      title: "User Status Updated",
+      description: `User status changed to ${newStatus}.`,
+    });
+  };
+
+  const handleAddUser = () => {
+    const newUser: User = {
+      id: Date.now(),
+      name: "New User",
+      email: "newuser@example.com",
+      status: "Pending",
+      joinDate: new Date().toISOString().split('T')[0],
+      engagement: "Medium"
+    };
+    
+    setUsers(prev => [newUser, ...prev]);
+    toast({
+      title: "User Added",
+      description: "New user has been added to the system.",
+    });
+  };
+
+  const sendEmail = (userEmail: string) => {
+    toast({
+      title: "Email Sent",
+      description: `Email sent to ${userEmail}`,
+    });
+  };
+
+  const totalUsers = users.length;
+  const activeUsers = users.filter(u => u.status === 'Active').length;
+  const newSignups = users.filter(u => {
+    const joinDate = new Date(u.joinDate);
+    const thisMonth = new Date();
+    thisMonth.setDate(1);
+    return joinDate >= thisMonth;
+  }).length;
+  const engagementRate = Math.round((users.filter(u => u.engagement === 'High').length / totalUsers) * 100);
+
   return (
     <div className="container p-6 mx-auto max-w-7xl">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
@@ -21,7 +94,7 @@ export function UsersSection() {
           <h1 className="text-3xl font-bold">User Management</h1>
           <p className="text-muted-foreground">Manage and monitor your platform users</p>
         </div>
-        <Button className="flex items-center gap-2">
+        <Button onClick={handleAddUser} className="flex items-center gap-2">
           <UserPlus className="h-4 w-4" />
           Add New User
         </Button>
@@ -35,7 +108,7 @@ export function UsersSection() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">2,543</div>
+            <div className="text-2xl font-bold">{totalUsers}</div>
             <p className="text-xs text-muted-foreground">+12.5% from last month</p>
           </CardContent>
         </Card>
@@ -46,7 +119,7 @@ export function UsersSection() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">1,923</div>
+            <div className="text-2xl font-bold">{activeUsers}</div>
             <p className="text-xs text-muted-foreground">+8.2% from last month</p>
           </CardContent>
         </Card>
@@ -57,7 +130,7 @@ export function UsersSection() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">145</div>
+            <div className="text-2xl font-bold">{newSignups}</div>
             <p className="text-xs text-muted-foreground">This month</p>
           </CardContent>
         </Card>
@@ -68,7 +141,7 @@ export function UsersSection() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">76%</div>
+            <div className="text-2xl font-bold">{engagementRate}%</div>
             <p className="text-xs text-muted-foreground">+3.1% from last month</p>
           </CardContent>
         </Card>
@@ -82,12 +155,36 @@ export function UsersSection() {
             <div className="flex items-center gap-2">
               <div className="relative">
                 <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Search users..." className="pl-8 w-[200px]" />
+                <Input 
+                  placeholder="Search users..." 
+                  className="pl-8 w-[200px]"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
-              <Button variant="outline" size="sm">
-                <Filter className="h-4 w-4 mr-2" />
-                Filter
-              </Button>
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-[120px]">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="Active">Active</SelectItem>
+                  <SelectItem value="Inactive">Inactive</SelectItem>
+                  <SelectItem value="Pending">Pending</SelectItem>
+                  <SelectItem value="Banned">Banned</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={engagementFilter} onValueChange={setEngagementFilter}>
+                <SelectTrigger className="w-[140px]">
+                  <SelectValue placeholder="Engagement" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Levels</SelectItem>
+                  <SelectItem value="High">High</SelectItem>
+                  <SelectItem value="Medium">Medium</SelectItem>
+                  <SelectItem value="Low">Low</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </CardHeader>
@@ -105,13 +202,17 @@ export function UsersSection() {
                 </tr>
               </thead>
               <tbody>
-                {mockUsers.map((user) => (
-                  <tr key={user.id} className="border-b">
+                {filteredUsers.map((user) => (
+                  <tr key={user.id} className="border-b hover:bg-muted/50">
                     <td className="py-3 font-medium">{user.name}</td>
                     <td className="py-3 text-muted-foreground">{user.email}</td>
                     <td className="py-3">
                       <Badge 
-                        variant={user.status === 'Active' ? 'default' : user.status === 'Pending' ? 'secondary' : 'outline'}
+                        variant={
+                          user.status === 'Active' ? 'default' : 
+                          user.status === 'Pending' ? 'secondary' : 
+                          user.status === 'Banned' ? 'destructive' : 'outline'
+                        }
                       >
                         {user.status}
                       </Badge>
@@ -119,15 +220,45 @@ export function UsersSection() {
                     <td className="py-3 text-muted-foreground">{user.joinDate}</td>
                     <td className="py-3">
                       <Badge 
-                        variant={user.engagement === 'High' ? 'default' : user.engagement === 'Medium' ? 'secondary' : 'outline'}
+                        variant={
+                          user.engagement === 'High' ? 'default' : 
+                          user.engagement === 'Medium' ? 'secondary' : 'outline'
+                        }
                       >
                         {user.engagement}
                       </Badge>
                     </td>
                     <td className="py-3">
-                      <Button variant="ghost" size="sm">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
+                      <div className="flex gap-1">
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => sendEmail(user.email)}
+                        >
+                          <Mail className="h-4 w-4" />
+                        </Button>
+                        {user.status !== 'Banned' && (
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => handleStatusChange(user.id, 'Banned')}
+                          >
+                            <Ban className="h-4 w-4" />
+                          </Button>
+                        )}
+                        {user.status === 'Pending' && (
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => handleStatusChange(user.id, 'Active')}
+                          >
+                            <Shield className="h-4 w-4" />
+                          </Button>
+                        )}
+                        <Button variant="ghost" size="sm">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))}
