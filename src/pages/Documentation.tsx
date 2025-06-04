@@ -24,9 +24,11 @@ const Documentation = () => {
                 View Dashboard
               </Link>
             </Button>
-            <Button variant="outline">
-              <Github className="mr-2 h-5 w-5" />
-              View on GitHub
+            <Button variant="outline" asChild>
+              <a href="https://github.com/luvbird32/recomengine-90.git" target="_blank" rel="noopener noreferrer">
+                <Github className="mr-2 h-5 w-5" />
+                View on GitHub
+              </a>
             </Button>
           </div>
         </div>
@@ -285,17 +287,23 @@ const Documentation = () => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap justify-center gap-4">
-                <Button variant="outline">
-                  <Github className="mr-2 h-5 w-5" />
-                  GitHub Repository
+                <Button variant="outline" asChild>
+                  <a href="https://github.com/luvbird32/recomengine-90.git" target="_blank" rel="noopener noreferrer">
+                    <Github className="mr-2 h-5 w-5" />
+                    GitHub Repository
+                  </a>
                 </Button>
-                <Button variant="outline">
-                  <BookOpen className="mr-2 h-5 w-5" />
-                  Contributing Guide
+                <Button variant="outline" asChild>
+                  <a href="https://github.com/luvbird32/recomengine-90.git/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">
+                    <BookOpen className="mr-2 h-5 w-5" />
+                    Contributing Guide
+                  </a>
                 </Button>
-                <Button variant="outline">
-                  <Code2 className="mr-2 h-5 w-5" />
-                  Report Issues
+                <Button variant="outline" asChild>
+                  <a href="https://github.com/luvbird32/recomengine-90.git/issues" target="_blank" rel="noopener noreferrer">
+                    <Code2 className="mr-2 h-5 w-5" />
+                    Report Issues
+                  </a>
                 </Button>
               </div>
             </CardContent>

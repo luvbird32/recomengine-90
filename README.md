@@ -1,4 +1,3 @@
-
 # Recommendation Engine Dashboard
 
 An open-source, AI-powered recommendation engine with a comprehensive dashboard for monitoring, analytics, and algorithm management.
@@ -23,8 +22,8 @@ An open-source, AI-powered recommendation engine with a comprehensive dashboard 
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/recommendation-engine.git
-cd recommendation-engine
+git clone https://github.com/luvbird32/recomengine-90.git
+cd recomengine-90
 
 # Install dependencies
 npm install
@@ -137,7 +136,7 @@ src/
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+We welcome contributions! Please see our [Contributing Guide](https://github.com/luvbird32/recomengine-90.git/blob/main/CONTRIBUTING.md) for details.
 
 ### Development Workflow
 
@@ -234,10 +233,10 @@ netlify deploy --prod
 
 ## 📚 Documentation
 
-- [API Reference](docs/api.md)
-- [Algorithm Guide](docs/algorithms.md)
-- [Component Documentation](src/components/README.md)
-- [Service Documentation](src/services/README.md)
+- [API Reference](https://github.com/luvbird32/recomengine-90.git/blob/main/docs/api.md)
+- [Algorithm Guide](https://github.com/luvbird32/recomengine-90.git/blob/main/docs/algorithms.md)
+- [Component Documentation](https://github.com/luvbird32/recomengine-90.git/blob/main/src/components/README.md)
+- [Service Documentation](https://github.com/luvbird32/recomengine-90.git/blob/main/src/services/README.md)
 
 ## 🐛 Troubleshooting
 
@@ -257,7 +256,7 @@ enableDebugMode(true);
 
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](https://github.com/luvbird32/recomengine-90.git/blob/main/LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
@@ -268,9 +267,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## 📞 Support
 
 - 📧 Email: support@recommendationengine.com
-- 💬 Discord: [Join our community](https://discord.gg/recommendation-engine)
-- 📖 Documentation: [docs.recommendationengine.com](https://docs.recommendationengine.com)
-- 🐛 Issues: [GitHub Issues](https://github.com/your-org/recommendation-engine/issues)
+- 📖 Documentation: [GitHub Repository](https://github.com/luvbird32/recomengine-90.git)
+- 🐛 Issues: [GitHub Issues](https://github.com/luvbird32/recomengine-90.git/issues)
 
 ---
 

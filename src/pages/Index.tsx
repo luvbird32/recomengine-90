@@ -31,9 +31,11 @@ const Index = () => {
           </p>
           
           <div className="flex flex-wrap justify-center gap-4 pt-8">
-            <Button size="lg" className="bg-purple-600/90 hover:bg-purple-700/90 backdrop-blur-sm text-lg px-8">
-              <Github className="mr-2 h-5 w-5" />
-              View on GitHub <ArrowRight className="ml-2 h-5 w-5" />
+            <Button size="lg" className="bg-purple-600/90 hover:bg-purple-700/90 backdrop-blur-sm text-lg px-8" asChild>
+              <a href="https://github.com/luvbird32/recomengine-90.git" target="_blank" rel="noopener noreferrer">
+                <Github className="mr-2 h-5 w-5" />
+                View on GitHub <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
             </Button>
             <Button size="lg" variant="outline" className="text-lg px-8 backdrop-blur-sm bg-white/30 border-white/50 hover:bg-white/50" asChild>
               <Link to="/documentation">
@@ -149,35 +151,45 @@ const Index = () => {
                 <Github className="w-12 h-12 text-gray-800 mx-auto mb-4" />
                 <h3 className="font-semibold mb-2">Contribute Code</h3>
                 <p className="text-sm text-muted-foreground mb-4">Submit PRs, fix bugs, add features</p>
-                <Button variant="outline" size="sm" className="backdrop-blur-sm bg-white/20">
-                  View Issues
+                <Button variant="outline" size="sm" className="backdrop-blur-sm bg-white/20" asChild>
+                  <a href="https://github.com/luvbird32/recomengine-90.git/issues" target="_blank" rel="noopener noreferrer">
+                    View Issues
+                  </a>
                 </Button>
               </div>
               <div className="p-6 backdrop-blur-md bg-white/30 border border-white/30 rounded-xl">
                 <BookOpen className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                 <h3 className="font-semibold mb-2">Improve Docs</h3>
                 <p className="text-sm text-muted-foreground mb-4">Help others learn and contribute</p>
-                <Button variant="outline" size="sm" className="backdrop-blur-sm bg-white/20">
-                  Edit Docs
+                <Button variant="outline" size="sm" className="backdrop-blur-sm bg-white/20" asChild>
+                  <a href="https://github.com/luvbird32/recomengine-90.git/blob/main/README.md" target="_blank" rel="noopener noreferrer">
+                    Edit Docs
+                  </a>
                 </Button>
               </div>
               <div className="p-6 backdrop-blur-md bg-white/30 border border-white/30 rounded-xl">
                 <Users className="w-12 h-12 text-purple-600 mx-auto mb-4" />
                 <h3 className="font-semibold mb-2">Share Ideas</h3>
                 <p className="text-sm text-muted-foreground mb-4">Discuss features and improvements</p>
-                <Button variant="outline" size="sm" className="backdrop-blur-sm bg-white/20">
-                  Join Discord
+                <Button variant="outline" size="sm" className="backdrop-blur-sm bg-white/20" asChild>
+                  <a href="https://github.com/luvbird32/recomengine-90.git/discussions" target="_blank" rel="noopener noreferrer">
+                    GitHub Discussions
+                  </a>
                 </Button>
               </div>
             </div>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button size="lg" className="bg-gray-800 hover:bg-gray-900 text-white">
-                <Github className="mr-2 h-5 w-5" />
-                Star on GitHub
+              <Button size="lg" className="bg-gray-800 hover:bg-gray-900 text-white" asChild>
+                <a href="https://github.com/luvbird32/recomengine-90.git" target="_blank" rel="noopener noreferrer">
+                  <Github className="mr-2 h-5 w-5" />
+                  Star on GitHub
+                </a>
               </Button>
-              <Button size="lg" variant="outline" className="backdrop-blur-sm bg-white/30 border-white/50 hover:bg-white/50">
-                <BookOpen className="mr-2 h-5 w-5" />
-                Read Contributing Guide
+              <Button size="lg" variant="outline" className="backdrop-blur-sm bg-white/30 border-white/50 hover:bg-white/50" asChild>
+                <a href="https://github.com/luvbird32/recomengine-90.git/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">
+                  <BookOpen className="mr-2 h-5 w-5" />
+                  Read Contributing Guide
+                </a>
               </Button>
             </div>
           </div>
