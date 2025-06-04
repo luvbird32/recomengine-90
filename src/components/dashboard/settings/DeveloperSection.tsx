@@ -2,7 +2,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Github, ExternalLink, Code2, Book } from "lucide-react";
-import { DeveloperTools } from "@/components/developer/DeveloperTools";
 import { ApiKeyGenerator } from "@/components/developer/ApiKeyGenerator";
 import { OpenApiDocs } from "@/components/developer/OpenApiDocs";
 
@@ -67,8 +66,6 @@ export function DeveloperSection() {
             </div>
           </CardContent>
         </Card>
-
-        <DeveloperTools />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
