@@ -25,12 +25,16 @@ const Dashboard = () => {
   };
 
   return (
-    <DashboardSidebar 
-      activeSection={activeSection} 
-      onSectionChange={setActiveSection}
-    >
-      {renderSection()}
-    </DashboardSidebar>
+    <div className="min-h-screen">
+      <DashboardSidebar 
+        activeSection={activeSection} 
+        onSectionChange={setActiveSection}
+      >
+        <div className="p-6">
+          {renderSection()}
+        </div>
+      </DashboardSidebar>
+    </div>
   );
 };
 
