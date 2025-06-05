@@ -30,8 +30,10 @@ const Dashboard = () => {
         activeSection={activeSection} 
         onSectionChange={setActiveSection}
       >
-        <div className="p-6">
-          {renderSection()}
+        <div className="p-8 max-w-full overflow-x-hidden">
+          <div className="max-w-7xl mx-auto">
+            {renderSection()}
+          </div>
         </div>
       </DashboardSidebar>
     </div>
